@@ -33,11 +33,11 @@ public class Librarian {
 			}
 		});
 		
-		JButton up_info_but= new JButton("Update Info ");
-		up_info_but.setBounds(280,20,120,25);
-		up_info_but.addActionListener(new ActionListener() {
+		JButton up_books_but= new JButton("Update Aisle");
+		up_books_but.setBounds(280,20,120,25);
+		up_books_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Update(author) successful!");
+				update_books_aisle(smt);
 			}
 		});
 		
@@ -53,7 +53,7 @@ public class Librarian {
 		delete_but.setBounds(60,60,120,25);
 		delete_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Delete successful!");
+				delete_books(smt);
 			}
 		});
 		
@@ -78,7 +78,7 @@ public class Librarian {
 		
 		f.add(add_but);
 		f.add(search_but);
-		f.add(up_info_but);
+		f.add(up_books_but);
 		f.add(add_pub_but);
 		f.add(delete_but);
 		f.add(dis_book_but);
@@ -309,6 +309,87 @@ public class Librarian {
 			JOptionPane.showMessageDialog(null,ex);
 		}
 	}
+	public static void delete_books(Statement smt) {
+		JFrame f6 = new JFrame("Enter Book ID for deleting book");
+		JLabel J1;
+		
+		J1 = new JLabel("Book ID");
+		J1.setBounds(30,15,100,30);
+		
+		JTextField B_ID = new JTextField();
+		B_ID.setBounds(150, 15, 200, 30);
+		
+		JButton add_del_but=new JButton("Delete Book");//creating instance of JButton for Login Button
+	    add_del_but.setBounds(170,50,150,25);
+	    
+		add_del_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String b_id = B_ID.getText();
+				int B_id = Integer.parseInt(b_id);
+				try {
+					String sql = "delete from books where b_id = "+B_id;
+					smt.executeUpdate(sql);
+				}
+				catch(Exception ex) {
+					JOptionPane.showMessageDialog(null,ex);
+				}
+				f6.dispose();
+				JOptionPane.showMessageDialog(null,"Delete successful!");
+			}
+		});
+		f6.add(J1);
+		f6.add(B_ID);
+		f6.add(add_del_but);
+		f6.setSize(400,200);//400 width and 500 height  
+	    f6.setLayout(null);
+	    f6.setVisible(true);	
+	}
+	
+	public static void update_books_aisle(Statement smt) {
+		JFrame f7 = new JFrame("Update the book aisle");
+		JLabel J1,J2;
+		J1 = new JLabel("Book ID");
+		J1.setBounds(30,15,100,30);
+		
+		J2 = new JLabel("New Aisle");
+		J2.setBounds(30,45,100,30);
+
+		JTextField B_ID = new JTextField();
+		B_ID.setBounds(150, 15, 200, 30);
+		
+		JTextField new_aisle = new JTextField();
+		new_aisle.setBounds(150, 45, 200, 30);
+		
+		JButton up_aisle_but=new JButton("Update Book");//creating instance of JButton for Login Button
+	    up_aisle_but.setBounds(170,80,200,30);
+	    
+	    up_aisle_but.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		String B_id = B_ID.getText();
+	    		String New_aisle = new_aisle.getText();	    	
+	    		try {
+	    			String sql = "update books set aisle = "+Integer.parseInt(New_aisle) +" where b_id = "+Integer.parseInt(B_id);
+	    			smt.executeUpdate(sql);
+	    			
+	    		}
+	    		catch(Exception ex) {
+	    			JOptionPane.showMessageDialog(null,ex);
+	    		}
+	    		f7.dispose();
+	    		JOptionPane.showMessageDialog(null,"Aisle Updated successfully!");
+	    		
+	    	}
+	    });
+	    f7.add(J1);
+	    f7.add(J2);
+	    f7.add(B_ID);
+	    f7.add(new_aisle);
+	    f7.add(up_aisle_but);
+		f7.setSize(400,300);//400 width and 500 height  
+	    f7.setLayout(null);
+	    f7.setVisible(true);
+	}
+		
 	
 
 }
