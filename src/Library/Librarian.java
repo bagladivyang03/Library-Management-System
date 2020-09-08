@@ -11,16 +11,17 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.awt.FlowLayout;
+import net.proteanit.sql.DbUtils;
 
 
 public class Librarian {
-	public void librarian_menu() {
+	public static void librarian_menu(String l_id , Statement smt) {
 		JFrame f =new JFrame("Librarian Functions");
 		JButton add_but = new JButton("Add Books ");
 		add_but.setBounds(20,20,120,25);
 		add_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Added sucessfully!");
+				add_books(l_id,smt);
 			}
 		});
 		
@@ -28,39 +29,47 @@ public class Librarian {
 		search_but.setBounds(150,20,120,25);
 		search_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Search successful!");
+				
 			}
 		});
 		
-		JButton up_aut_but= new JButton("Update Author ");
-		up_aut_but.setBounds(280,20,120,25);
-		up_aut_but.addActionListener(new ActionListener() {
+		JButton up_info_but= new JButton("Update Info ");
+		up_info_but.setBounds(280,20,120,25);
+		up_info_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,"Update(author) successful!");
 			}
 		});
 		
-		JButton up_pub_but= new JButton("Update Publisher ");
-		up_pub_but.setBounds(410,20,140,25);
-		up_pub_but.addActionListener(new ActionListener() {
+		JButton add_pub_but= new JButton("Add Publisher ");
+		add_pub_but.setBounds(410,20,140,25);
+		add_pub_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Update(publisher) successful!");
+				add_publisher(smt);
 			}
 		});
 		
 		JButton delete_but= new JButton("Delete Books ");
-		delete_but.setBounds(150,60,120,25);
+		delete_but.setBounds(60,60,120,25);
 		delete_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,"Delete successful!");
 			}
 		});
 		
-		JButton up_book_but= new JButton("Update Books ");
-		up_book_but.setBounds(280,60,120,25);
-		up_book_but.addActionListener(new ActionListener() {
+		JButton dis_book_but= new JButton("Display Books");
+		dis_book_but.setBounds(190,60,120,25);
+		dis_book_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Update successful!");
+				display_books(smt);
+			}
+		});
+		
+		JButton add_author_but= new JButton("Add Author");
+		add_author_but.setBounds(330,60,120,25);
+		add_author_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_author(smt);
 			}
 		});
 		
@@ -69,15 +78,237 @@ public class Librarian {
 		
 		f.add(add_but);
 		f.add(search_but);
-		f.add(up_aut_but);
-		f.add(up_pub_but);
+		f.add(up_info_but);
+		f.add(add_pub_but);
 		f.add(delete_but);
-		f.add(up_book_but);
+		f.add(dis_book_but);
+		f.add(add_author_but);
 		f.setSize(600,200);//400 width and 500 height  
 	    f.setLayout(null);//using no layout managers  
 	    f.setVisible(true);
 	}
 	// method to accept input for books
+	public static void add_books(String l_id , Statement smt) {
+		JFrame f2=new JFrame("Enter Book Info");
+		JLabel J1,J2,J3,J4,J5,J6;
+		J1 = new JLabel("Book ID");
+		J1.setBounds(30,15,100,30);
+		
+		J2 = new JLabel("Book Name");
+		J2.setBounds(30,50,100,30);
+		
+		J3 = new JLabel("Author ID");
+		J3.setBounds(30,85,100,30);
+		
+		J4 = new JLabel("Publisher ID");
+		J4.setBounds(30,120,110,30);
+		
+		J5 = new JLabel("Genre");
+		J5.setBounds(30,155,110,30);
+		
+		J6 = new JLabel("Aisle");
+		J6.setBounds(30,190,110,30);
+		
+		JTextField B_ID = new JTextField();
+		B_ID.setBounds(150, 15, 200, 30);
+		
+		JTextField B_Name = new JTextField();
+		B_Name.setBounds(150, 50, 200, 30);
+		
+		JTextField B_author = new JTextField();
+		B_author.setBounds(150, 85, 200, 30);
+		
+		JTextField B_publisher = new JTextField();
+		B_publisher.setBounds(150, 120, 200, 30);
+		
+		JTextField B_genre = new JTextField();
+		B_genre.setBounds(150, 155, 200, 30);
+		
+		JTextField B_aisle = new JTextField();
+		B_aisle.setBounds(150, 190, 200, 30);
+		
+		
+	    JButton addbooks_but=new JButton("Add Books");//creating instance of JButton for Login Button
+	    addbooks_but.setBounds(170,225,100,25);
+	    
+	    addbooks_but.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String b_id = B_ID.getText();
+	    		String b_name = B_Name.getText();
+	    		String b_author = B_author.getText();
+	    		String b_publisher = B_publisher.getText();
+	    		String b_genre = B_genre.getText();
+	    		String b_aisle = B_aisle.getText();
+	    		int B_id = Integer.parseInt(b_id);
+	    		int L_id = Integer.parseInt(l_id);
+	    		int A_id = Integer.parseInt(b_author);
+	    		int P_id = Integer.parseInt(b_publisher);
+	    		int B_aisle = Integer.parseInt(b_aisle);
+	    		try {
+	    		String sql = "insert into books values("+B_id+",'" +b_name+"','"+b_genre+"',"+B_aisle+","+L_id+","+A_id+","+P_id+")";
+	    		smt.executeUpdate(sql);
+	    		}
+	    		catch(Exception ex) {
+	    			ex.printStackTrace();
+	    		}
+	    		f2.dispose();
+	    		JOptionPane.showMessageDialog(null, "Books added Successfully!!");
+	    	}
+	    });
+	    
+	    
+	    f2.add(J1);
+	    f2.add(J2);
+	    f2.add(J3);
+	    f2.add(J4);
+	    f2.add(J5);
+	    f2.add(J6);
+	    f2.add(B_ID);
+	    f2.add(B_Name);
+	    f2.add(B_author);
+	    f2.add(B_publisher);
+	    f2.add(addbooks_but);
+	    f2.add(B_genre);
+	    f2.add(B_aisle);
+	    f2.setSize(400,400);//400 width and 500 height  
+	    f2.setLayout(null);
+	    f2.setVisible(true);
+	    
+	    
+		
+	}
+	
+	public static void add_author(Statement smt) {
+		JFrame f3 = new JFrame("Enter Author Details");
+		JLabel J1,J2,J3;
+		
+		J1 = new JLabel("Author ID");
+		J1.setBounds(30,15,100,30);
+		
+		J2 = new JLabel("Author Name");
+		J2.setBounds(30,50,100,30);
+		
+		J3 = new JLabel("Author E-mail");
+		J3.setBounds(30,85,100,30);
+		
+		JTextField A_ID = new JTextField();
+		A_ID.setBounds(150, 15, 200, 30);
+		
+		JTextField A_name = new JTextField();
+		A_name.setBounds(150, 50, 200, 30);
+
+		JTextField A_email = new JTextField();
+		A_email.setBounds(150, 85, 200, 30);
+		
+		JButton addauth_but=new JButton("Add Author");//creating instance of JButton for Login Button
+	    addauth_but.setBounds(170,155,100,25);
+	    
+	    addauth_but.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String A_id = A_ID.getText();
+	    		String a_name = A_name.getText();
+	    		String a_email = A_email.getText();
+	    		int a_id = Integer.parseInt(A_id);
+	    		try {
+	    		String sql = "insert into author values("+a_id+",'" +a_name+"','"+a_email+"')";
+	    		smt.executeUpdate(sql);
+	    		}
+	    		catch(Exception ex) {
+	    			ex.printStackTrace();
+	    		}
+	    		f3.dispose();
+	    		JOptionPane.showMessageDialog(null, "Author Details added Successfully!!");
+	    	}
+	    });
+	    
+	    
+		
+		f3.add(J1);
+	    f3.add(J2);
+	    f3.add(J3);
+	    f3.add(A_ID);
+	    f3.add(A_name);
+	    f3.add(A_email);
+	    f3.add(addauth_but);
+	    f3.setSize(400,400);//400 width and 500 height  
+	    f3.setLayout(null);
+	    f3.setVisible(true);
+	}
+	
+	public static void add_publisher(Statement smt) {
+		JFrame f4 = new JFrame("Enter Publisher Details");
+		JLabel J1,J2,J3;
+		
+		J1 = new JLabel("Publisher ID");
+		J1.setBounds(30,15,100,30);
+		
+		J2 = new JLabel("Publisher Name");
+		J2.setBounds(30,50,100,30);
+		
+		J3 = new JLabel("Publisher E-mail");
+		J3.setBounds(30,85,100,30);
+		
+		JTextField P_ID = new JTextField();
+		P_ID.setBounds(150, 15, 200, 30);
+		
+		JTextField P_name = new JTextField();
+		P_name.setBounds(150, 50, 200, 30);
+
+		JTextField P_email = new JTextField();
+		P_email.setBounds(150, 85, 200, 30);
+		
+		JButton addpubl_but=new JButton("Add Publisher");//creating instance of JButton for Login Button
+	    addpubl_but.setBounds(170,155,150,25);
+	    
+	    addpubl_but.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String P_id = P_ID.getText();
+	    		String p_name = P_name.getText();
+	    		String p_email = P_email.getText();
+	    		int p_id = Integer.parseInt(P_id);
+	    		try {
+	    		String sql = "insert into publisher values("+p_id+",'" +p_name+"','"+p_email+"')";
+	    		smt.executeUpdate(sql);
+	    		}
+	    		catch(Exception ex) {
+	    			ex.printStackTrace();
+	    		}
+	    		f4.dispose();
+	    		JOptionPane.showMessageDialog(null, "Publisher Details added Successfully!!");
+	    	}
+	    });
+	    
+	    
+		
+		f4.add(J1);
+	    f4.add(J2);
+	    f4.add(J3);
+	    f4.add(P_ID);
+	    f4.add(P_name);
+	    f4.add(P_email);
+	    f4.add(addpubl_but);
+	    f4.setSize(400,400);//400 width and 500 height  
+	    f4.setLayout(null);
+	    f4.setVisible(true);
+	}
+	
+	public static void display_books(Statement smt) {
+		JFrame f5 = new JFrame("Books Available");
+		try {
+			String sql = "select b_id,b_name,genre,aisle from books";
+			ResultSet rs = smt.executeQuery(sql);
+			JTable book_list = new JTable();
+			book_list.setModel(DbUtils.resultSetToTableModel(rs));
+			JScrollPane scrollPane = new JScrollPane(book_list);
+			f5.add(scrollPane);
+			f5.setSize(800,400);
+			f5.setVisible(true);
+			
+		}
+		catch(Exception ex) {
+			JOptionPane.showMessageDialog(null,ex);
+		}
+	}
 	
 
 }

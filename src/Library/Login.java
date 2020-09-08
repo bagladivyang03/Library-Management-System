@@ -95,8 +95,11 @@ public class Login extends JFrame{
 	    				else {
 	    					
 	    					rs.beforeFirst();
-	    					Librarian L = new Librarian();
-	    					L.librarian_menu();
+	    					while(rs.next()) {
+	    						String l_id = rs.getString("lib_id");
+	    						Librarian L = new Librarian();
+		    					L.librarian_menu(l_id,smt);
+	    					}
 	    					f1.dispose();
 	    					
 	    				}
