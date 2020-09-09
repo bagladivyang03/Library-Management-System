@@ -31,7 +31,24 @@ public class Member{
 		search_but.setBounds(150,20,120,25);
 		search_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Search successful!");
+				Login L = new Login();
+				Connection connection = L.connect();
+				try {
+				CallableStatement cstmt = connection.prepareCall("{? = call check_user_inBorrows(?)}");
+				cstmt.registerOutParameter(1,java.sql.Types.INTEGER);
+				cstmt.setString(2, m_id);
+				cstmt.execute();
+				if(cstmt.getInt(1) == 0) {
+					issue_book(m_id,smt);
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Return the book first!!");
+				}
+				
+				}
+				catch(Exception E) {
+					
+				}
 			}
 		});
 		
@@ -202,6 +219,47 @@ public class Member{
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null,e);
 		}
+	}
+	
+	public static void issue_book(String m_id , Statement smt) {
+JFrame F1 = new JFrame("Issue the Book");
+		
+		JLabel J1;
+		
+		J1 = new JLabel("Enter Book ID");
+		J1.setBounds(100,15,200,30);
+		
+		JTextField B_ID = new JTextField();
+		B_ID.setBounds(100, 50, 200, 30);
+	
+		JButton issuebutton =new JButton("ISSUE");//creating instance of JButton for Login Button
+	    issuebutton.setBounds(100,85,200,30);
+	    
+	    issuebutton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String b_id = B_ID.getText();
+	    		int B_id = Integer.parseInt(b_id);
+	    		int M_id = Integer.parseInt(m_id);
+	    		try {
+	    			String sql = "insert into borrows values("+B_id +","+M_id+",curdate() , DATE_ADD(curdate(),INTERVAL 14 DAY) , 0)";
+	    			smt.executeUpdate(sql);
+	    			F1.dispose();
+	    			JOptionPane.showMessageDialog(null, "Book Issued Sucessfully!!");
+	    		}
+	    		catch(Exception e1) {
+	    			JOptionPane.showMessageDialog(null,e1);
+	    		}
+	    	}
+	    	
+	    });
+	    
+	    F1.add(J1);
+	    F1.add(B_ID);
+	    F1.add(issuebutton);
+	    F1.setSize(400,400);
+	    F1.setLayout(null);
+	    F1.setVisible(true);
+
 	}
 
 }
