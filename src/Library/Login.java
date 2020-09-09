@@ -170,8 +170,11 @@ public class Login extends JFrame{
 	    				else {
 	    					
 	    					rs.beforeFirst();
-	    					Member M = new Member();
-	    					M.Member_menu();
+	    					while(rs.next()) {
+	    						String m_id = rs.getString("m_id");
+	    						Member M = new Member();
+		    					M.Member_menu(m_id,smt);
+	    					}
 	    					f1.dispose();
 	    					
 	    				}

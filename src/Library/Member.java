@@ -1,5 +1,8 @@
 package Library;
 import javax.swing.*;
+
+import net.proteanit.sql.DbUtils;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -14,13 +17,13 @@ import java.awt.FlowLayout;
 
 
 public class Member{
-	public void Member_menu() {
+	public void Member_menu(String m_id,Statement smt) {
 		JFrame f =new JFrame("Member Functions");
 		JButton add_but = new JButton("Search Book");
 		add_but.setBounds(20,20,120,25);
 		add_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Added sucessfully!");
+				book_search(smt);
 			}
 		});
 		
@@ -36,7 +39,7 @@ public class Member{
 		up_aut_but.setBounds(280,20,120,25);
 		up_aut_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Update(author) successful!");
+				
 			}
 		});
 		
@@ -44,7 +47,7 @@ public class Member{
 		up_pub_but.setBounds(410,20,140,25);
 		up_pub_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Update(publisher) successful!");
+				author_search(smt);
 			}
 		});
 		
@@ -52,7 +55,7 @@ public class Member{
 		delete_but.setBounds(25,60,150,25);
 		delete_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Delete successful!");
+				publisher_search(smt);
 			}
 		});
 		
@@ -86,6 +89,119 @@ public class Member{
 	    f.setVisible(true);
 	}
 	// method to accept input for books
+	public static void book_search(Statement smt) {
+		JFrame F1 = new JFrame("Search the Book");
+		
+		JLabel J1;
+		
+		J1 = new JLabel("Enter Book Name ");
+		J1.setBounds(100,15,200,30);
+		
+		JTextField B_name = new JTextField();
+		B_name.setBounds(100, 50, 200, 30);
 	
+		JButton searchbutton=new JButton("Search Books");//creating instance of JButton for Login Button
+	    searchbutton.setBounds(100,85,200,30);
+	    
+	    searchbutton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String b_name = B_name.getText();
+	    		String sql = "select b_id,b_name,genre,aisle from books where b_name like '%"+b_name+"%'";
+	    		display_results(smt,sql,"Books Available");
+	    		F1.dispose();
+	    	}
+	    });
+	    	
+	    
+	    F1.add(J1);
+	    F1.add(B_name);
+	    F1.add(searchbutton);
+	    F1.setSize(400,200);
+	    F1.setLayout(null);
+	    F1.setVisible(true);
+	}
+	
+	public static void author_search(Statement smt) {
+		JFrame F1 = new JFrame("Search the Author");
+		
+		JLabel J1;
+		
+		J1 = new JLabel("Enter Author Name ");
+		J1.setBounds(100,15,200,30);
+		
+		JTextField A_name = new JTextField();
+		A_name.setBounds(100, 50, 200, 30);
+	
+		JButton searchbutton=new JButton("Search Author");//creating instance of JButton for Login Button
+	    searchbutton.setBounds(100,85,200,30);
+	    
+	    searchbutton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String a_Name = A_name.getText();
+	    		String sql = "select * from author where a_name = '"+a_Name+"'";
+	    		display_results(smt,sql,"Authors Available");
+	    		F1.dispose();
+	    	}
+	    });
+	    	
+	    
+	    F1.add(J1);
+	    F1.add(A_name);
+	    F1.add(searchbutton);
+	    F1.setSize(400,200);
+	    F1.setLayout(null);
+	    F1.setVisible(true);
+	}
+	
+	public static void publisher_search(Statement smt) {
+		JFrame F1 = new JFrame("Search the Publisher");
+		
+		JLabel J1;
+		
+		J1 = new JLabel("Enter Publisher Name ");
+		J1.setBounds(100,15,200,30);
+		
+		JTextField P_name = new JTextField();
+		P_name.setBounds(100, 50, 200, 30);
+	
+		JButton searchbutton=new JButton("Search Publisher");//creating instance of JButton for Login Button
+	    searchbutton.setBounds(100,85,200,30);
+	    
+	    searchbutton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String p_Name = P_name.getText();
+	    		String sql = "select * from publisher where p_name = '"+p_Name+"'";
+	    		display_results(smt,sql,"Publishers List");
+	    		F1.dispose();
+	    	}
+	    	
+	    });
+	    	
+	    
+	    F1.add(J1);
+	    F1.add(P_name);
+	    F1.add(searchbutton);
+	    F1.setSize(400,200);
+	    F1.setLayout(null);
+	    F1.setVisible(true);
+	}
+
+	
+	
+	private static void display_results(Statement smt,String sql,String s) {
+		JFrame J = new JFrame(s);
+		try {
+			ResultSet rs = smt.executeQuery(sql);
+			JTable book_list = new JTable();
+			book_list.setModel(DbUtils.resultSetToTableModel(rs));
+			JScrollPane scrollPane = new JScrollPane(book_list);
+			J.add(scrollPane);
+			J.setSize(800,400);
+			J.setVisible(true);
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(null,e);
+		}
+	}
 
 }
