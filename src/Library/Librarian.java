@@ -1,16 +1,9 @@
 package Library;
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-import java.awt.FlowLayout;
 import net.proteanit.sql.DbUtils;
 
 
@@ -50,7 +43,7 @@ public class Librarian {
 		});
 		
 		JButton delete_but= new JButton("Delete Books ");
-		delete_but.setBounds(60,60,120,25);
+		delete_but.setBounds(20,60,120,25);
 		delete_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				delete_books(smt);
@@ -58,7 +51,7 @@ public class Librarian {
 		});
 		
 		JButton dis_book_but= new JButton("Display Books");
-		dis_book_but.setBounds(190,60,120,25);
+		dis_book_but.setBounds(150,60,120,25);
 		dis_book_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				display_books(smt);
@@ -66,10 +59,18 @@ public class Librarian {
 		});
 		
 		JButton add_author_but= new JButton("Add Author");
-		add_author_but.setBounds(330,60,120,25);
+		add_author_but.setBounds(280,60,120,25);
 		add_author_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_author(smt);
+			}
+		});
+		
+		JButton set_penalty_but= new JButton("Set Penalty");
+		set_penalty_but.setBounds(410,60,120,25);
+		set_penalty_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				get_mid(smt);
 			}
 		});
 		
@@ -83,6 +84,7 @@ public class Librarian {
 		f.add(delete_but);
 		f.add(dis_book_but);
 		f.add(add_author_but);
+		f.add(set_penalty_but);
 		f.setSize(600,200);//400 width and 500 height  
 	    f.setLayout(null);//using no layout managers  
 	    f.setVisible(true);
@@ -388,6 +390,44 @@ public class Librarian {
 		f7.setSize(400,300);//400 width and 500 height  
 	    f7.setLayout(null);
 	    f7.setVisible(true);
+	}
+	public static void get_mid(Statement smt) {
+		JFrame F1 = new JFrame("Set Penalty to Zero");
+		
+		JLabel J1;
+		
+		J1 = new JLabel("Enter Member ID");
+		J1.setBounds(100,15,200,30);
+		
+		JTextField M_ID = new JTextField();
+		M_ID.setBounds(100, 50, 200, 30);
+	
+		JButton penalty_button =new JButton("Reset Penalty");
+	    penalty_button.setBounds(100,85,200,30);
+	    
+	    penalty_button.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String m_id = M_ID.getText();
+	    		int M_id = Integer.parseInt(m_id);
+	    		try {
+	    			String sql = "update borrows set penalty = 0 , return_date = curdate() where m_id ="+M_id;
+	    			smt.executeUpdate(sql);
+	    			F1.dispose();
+	    			JOptionPane.showMessageDialog(null, "Penalty Reset Sucessfull!!");
+	    		}
+	    		catch(Exception e1) {
+	    			JOptionPane.showMessageDialog(null,e1);
+	    		}
+	    	}
+	    	
+	    });
+	    F1.add(J1);
+	    F1.add(M_ID);
+	    F1.add(penalty_button);
+	    F1.setSize(400,300);
+	    F1.setLayout(null);
+	    F1.setVisible(true);
+	    
 	}
 		
 	

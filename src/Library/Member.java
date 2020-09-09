@@ -1,19 +1,12 @@
 package Library;
 import javax.swing.*;
 
+
 import net.proteanit.sql.DbUtils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-import java.awt.FlowLayout;
 
 
 public class Member{
@@ -56,7 +49,7 @@ public class Member{
 		up_aut_but.setBounds(280,20,120,25);
 		up_aut_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				return_book(m_id,smt);
 			}
 		});
 		
@@ -222,7 +215,7 @@ public class Member{
 	}
 	
 	public static void issue_book(String m_id , Statement smt) {
-JFrame F1 = new JFrame("Issue the Book");
+		JFrame F1 = new JFrame("Issue the Book");
 		
 		JLabel J1;
 		
@@ -259,7 +252,42 @@ JFrame F1 = new JFrame("Issue the Book");
 	    F1.setSize(400,400);
 	    F1.setLayout(null);
 	    F1.setVisible(true);
-
+	}
+	
+	public static void return_book(String M_id , Statement smt) {
+		
+		try {
+			Login L = new Login();
+			Connection con = L.connect();
+			String sql = "{call calc_penalty(?)}";
+			CallableStatement stmt=con.prepareCall(sql);
+			stmt.setInt(1, Integer.parseInt(M_id));
+			stmt.execute();
+			String sql1 = "select penalty from borrows where m_id = "+M_id;
+			ResultSet rs=smt.executeQuery(sql1);
+			while(rs.next()) {
+				String Penalty = rs.getString(1);
+				int pen = Integer.parseInt(Penalty);
+				if(pen>0) {
+					JOptionPane.showMessageDialog(null, "Pay Penalty First!! Contact to Librarian :/");
+				}
+				else {
+					try {
+						Statement smt1 = con.createStatement();
+						String sql2 = "delete from borrows where m_id = "+M_id;
+						smt1.executeUpdate(sql2);
+					}
+					catch(Exception E2) {
+						JOptionPane.showMessageDialog(null,E2);
+					}
+					
+					JOptionPane.showMessageDialog(null, "Return Successfull!!");
+				}
+			}
+		}
+		catch(Exception E) {
+			JOptionPane.showMessageDialog(null,E);
+		}
 	}
 
 }
