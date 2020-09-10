@@ -1,6 +1,5 @@
 package Library;
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -168,6 +167,25 @@ public class Librarian {
 	    		int A_id = Integer.parseInt(b_author);
 	    		int P_id = Integer.parseInt(b_publisher);
 	    		int B_aisle = Integer.parseInt(b_aisle);
+	    		if(b_id.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Book Id Can't be NULL");
+	    		}
+	    		else if(b_name.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Book Name Can't beNULL");
+	    		}
+	    		else if(b_author.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Author ID Can't be NULL");
+	    		}
+	    		else if(b_publisher.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Publisher ID Can't be NULL");
+	    		}
+	    		else if(b_genre.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Book Genre must be provided");
+	    		}
+	    		else if(b_aisle.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Book Aisle must be provided");
+	    		}
+	    		else {
 	    		try {
 	    		String sql = "insert into books values("+B_id+",'" +b_name+"','"+b_genre+"',"+B_aisle+","+L_id+","+A_id+","+P_id+")";
 	    		smt.executeUpdate(sql);
@@ -177,6 +195,7 @@ public class Librarian {
 	    		}
 	    		f2.dispose();
 	    		JOptionPane.showMessageDialog(null, "Books added Successfully!!");
+	    	}
 	    	}
 	    });
 	    

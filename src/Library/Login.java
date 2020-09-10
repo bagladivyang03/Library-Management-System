@@ -129,10 +129,10 @@ public class Login extends JFrame{
 		JFrame F = new JFrame("Register & Login");
 		
 		JButton reg_but=new JButton("Register");//creating instance of JButton for Login Button
-	    reg_but.setBounds(75,15,100,25);//Dimensions for button
+	    reg_but.setBounds(100,112,200,25);//Dimensions for button
 	    
 		JButton login_but=new JButton("Login");//creating instance of JButton for Login Button
-	    login_but.setBounds(75,50,100,25);//Dimensions for button
+	    login_but.setBounds(100,212,200,25);//Dimensions for button
 	    
 	    reg_but.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -185,7 +185,7 @@ public class Login extends JFrame{
 	    			JOptionPane.showMessageDialog(null, "Please enter password !!");
 	    		}
 	    		else {
-	    			Connection connection = connect();
+	    			Connection connection = connect1();
 	    			try {
 	    				Statement smt = connection.createStatement();
 	    				smt.executeUpdate("use library");
@@ -204,9 +204,9 @@ public class Login extends JFrame{
 	    	 
 	    	              }
 	    				else {
-	    					
 	    					rs.beforeFirst();
 	    					while(rs.next()) {
+	    						
 	    						String m_id = rs.getString("m_id");
 	    						Member M = new Member();
 		    					M.Member_menu(m_id,smt);
@@ -236,6 +236,18 @@ public class Login extends JFrame{
 	try {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root", "Divyang@03");
+	        return con;
+	 } 
+	 catch (Exception ex) {
+	        ex.printStackTrace();
+	 }
+	return null;
+	}
+	public static Connection connect1()
+	{
+	try {
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library","lib_member", "member123");
 	        return con;
 	 } 
 	 catch (Exception ex) {

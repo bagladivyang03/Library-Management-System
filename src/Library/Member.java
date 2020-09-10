@@ -80,7 +80,7 @@ public class Member{
 		dis_userinfo_but.setBounds(375,60,150,25);
 		dis_userinfo_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				display_info(smt);
+				display_info(m_id,smt);
 			}
 		});
 		
@@ -307,10 +307,11 @@ public class Member{
 			JOptionPane.showMessageDialog(null,E);
 		}
 	}
-	public void display_info(Statement smt) {
+	public void display_info(String M_id,Statement smt) {
 		JFrame f5 = new JFrame("Member Information");
+		int M_ID = Integer.parseInt(M_id);
 		try {
-			String sql = "select m_id,m_name,m_email,contact_info ,street,city,zipcode from member";
+			String sql = "select m_id,m_name,m_email,contact_info ,street,city,zipcode from member where m_id =" + M_ID;
 			ResultSet rs = smt.executeQuery(sql);
 			JTable mem_info = new JTable();
 			mem_info.setModel(DbUtils.resultSetToTableModel(rs));
@@ -409,5 +410,7 @@ public class Member{
 	
 		
  	}
+	
+
 
 }
