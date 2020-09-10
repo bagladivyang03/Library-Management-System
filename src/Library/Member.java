@@ -129,9 +129,14 @@ public class Member{
 	    searchbutton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		String b_name = B_name.getText();
+	    		if(b_name.equals("") ){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		String sql = "select b_id,b_name,genre,aisle from books where b_name like '%"+b_name+"%'";
 	    		display_results(smt,sql,"Books Available");
 	    		F1.dispose();
+	    	}
 	    	}
 	    });
 	    	
@@ -162,9 +167,14 @@ public class Member{
 	    searchbutton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		String a_Name = A_name.getText();
+	    		if(a_Name.equals("") ){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		String sql = "select * from author where a_name = '"+a_Name+"'";
 	    		display_results(smt,sql,"Authors Available");
 	    		F1.dispose();
+	    	}
 	    	}
 	    });
 	    	
@@ -195,9 +205,14 @@ public class Member{
 	    searchbutton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		String p_Name = P_name.getText();
+	    		if(p_Name.equals("") ){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		String sql = "select * from publisher where p_name = '"+p_Name+"'";
 	    		display_results(smt,sql,"Publishers List");
 	    		F1.dispose();
+	    	}
 	    	}
 	    	
 	    });
@@ -248,6 +263,10 @@ public class Member{
 	    issuebutton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		String b_id = B_ID.getText();
+	    		if(b_id.equals("") ){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		int B_id = Integer.parseInt(b_id);
 	    		int M_id = Integer.parseInt(m_id);
 	    		try {
@@ -259,6 +278,7 @@ public class Member{
 	    		catch(Exception e1) {
 	    			JOptionPane.showMessageDialog(null,e1);
 	    		}
+	    	}
 	    	}
 	    	
 	    });

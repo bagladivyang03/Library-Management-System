@@ -162,30 +162,15 @@ public class Librarian {
 	    		String b_publisher = B_publisher.getText();
 	    		String b_genre = B_genre.getText();
 	    		String b_aisle = B_aisle.getText();
+	    		if(b_id.equals("") || b_name.equals("") || b_author.equals("") || b_publisher.equals("") || b_genre.equals("") || b_aisle.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		int B_id = Integer.parseInt(b_id);
 	    		int L_id = Integer.parseInt(l_id);
 	    		int A_id = Integer.parseInt(b_author);
 	    		int P_id = Integer.parseInt(b_publisher);
 	    		int B_aisle = Integer.parseInt(b_aisle);
-	    		if(b_id.equals("")) {
-	    			JOptionPane.showMessageDialog(null, "Book Id Can't be NULL");
-	    		}
-	    		else if(b_name.equals("")) {
-	    			JOptionPane.showMessageDialog(null, "Book Name Can't beNULL");
-	    		}
-	    		else if(b_author.equals("")) {
-	    			JOptionPane.showMessageDialog(null, "Author ID Can't be NULL");
-	    		}
-	    		else if(b_publisher.equals("")) {
-	    			JOptionPane.showMessageDialog(null, "Publisher ID Can't be NULL");
-	    		}
-	    		else if(b_genre.equals("")) {
-	    			JOptionPane.showMessageDialog(null, "Book Genre must be provided");
-	    		}
-	    		else if(b_aisle.equals("")) {
-	    			JOptionPane.showMessageDialog(null, "Book Aisle must be provided");
-	    		}
-	    		else {
 	    		try {
 	    		String sql = "insert into books values("+B_id+",'" +b_name+"','"+b_genre+"',"+B_aisle+","+L_id+","+A_id+","+P_id+")";
 	    		smt.executeUpdate(sql);
@@ -252,6 +237,10 @@ public class Librarian {
 	    		String A_id = A_ID.getText();
 	    		String a_name = A_name.getText();
 	    		String a_email = A_email.getText();
+	    		if(A_id.equals("") || a_name.equals("") || a_email.equals("") ){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		int a_id = Integer.parseInt(A_id);
 	    		try {
 	    		String sql = "insert into author values("+a_id+",'" +a_name+"','"+a_email+"')";
@@ -262,6 +251,7 @@ public class Librarian {
 	    		}
 	    		f3.dispose();
 	    		JOptionPane.showMessageDialog(null, "Author Details added Successfully!!");
+	    	}
 	    	}
 	    });
 	    
@@ -310,7 +300,12 @@ public class Librarian {
 	    		String P_id = P_ID.getText();
 	    		String p_name = P_name.getText();
 	    		String p_email = P_email.getText();
-	    		int p_id = Integer.parseInt(P_id);
+	    		if(P_id.equals("") || p_name.equals("") || p_email.equals("") ){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		
+	    		else {
+	    			int p_id = Integer.parseInt(P_id);
 	    		try {
 	    		String sql = "insert into publisher values("+p_id+",'" +p_name+"','"+p_email+"')";
 	    		smt.executeUpdate(sql);
@@ -320,6 +315,7 @@ public class Librarian {
 	    		}
 	    		f4.dispose();
 	    		JOptionPane.showMessageDialog(null, "Publisher Details added Successfully!!");
+	    	}
 	    	}
 	    });
 	    
@@ -372,6 +368,10 @@ public class Librarian {
 		add_del_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String b_id = B_ID.getText();
+				if(b_id.equals("")){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+				else {
 				int B_id = Integer.parseInt(b_id);
 				try {
 					String sql = "delete from books where b_id = "+B_id;
@@ -382,6 +382,7 @@ public class Librarian {
 				}
 				f6.dispose();
 				JOptionPane.showMessageDialog(null,"Delete successful!");
+			}
 			}
 		});
 		f6.add(J1);
@@ -414,7 +415,11 @@ public class Librarian {
 	    up_aisle_but.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		String B_id = B_ID.getText();
-	    		String New_aisle = new_aisle.getText();	    	
+	    		String New_aisle = new_aisle.getText();	
+	    		if(B_id.equals("") || New_aisle.equals("")){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		try {
 	    			String sql = "update books set aisle = "+Integer.parseInt(New_aisle) +" where b_id = "+Integer.parseInt(B_id);
 	    			smt.executeUpdate(sql);
@@ -426,6 +431,7 @@ public class Librarian {
 	    		f7.dispose();
 	    		JOptionPane.showMessageDialog(null,"Aisle Updated successfully!");
 	    		
+	    	}
 	    	}
 	    });
 	    f7.add(J1);
@@ -455,6 +461,10 @@ public class Librarian {
 	    penalty_button.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
 	    		String m_id = M_ID.getText();
+	    		if(m_id.equals("") ){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
 	    		int M_id = Integer.parseInt(m_id);
 	    		try {
 	    			String sql = "update borrows set penalty = 0 , return_date = curdate() where m_id ="+M_id;
@@ -466,6 +476,7 @@ public class Librarian {
 	    			JOptionPane.showMessageDialog(null,e1);
 	    		}
 	    	}
+	    }
 	    	
 	    });
 	    F1.add(J1);

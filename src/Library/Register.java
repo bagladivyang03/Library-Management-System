@@ -62,7 +62,7 @@ public class Register {
 		
 		registerbutton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
-	    		int M_id = Integer.parseInt(M_ID.getText());
+	    		String M_id = M_ID.getText();
 	    		String M_name = M_Name.getText();
 	    		String M_Email = M_email.getText();
 	    		char M_pass [] = M_password.getPassword();
@@ -70,11 +70,16 @@ public class Register {
 	    		String M_Street = M_street.getText();
 	    		String M_City = M_city.getText();
 	    		String M_zip = M_Zipcode.getText();
+	    		if(M_id.equals("") || M_name.equals("") || M_Email.equals("") || M_pass.equals("") || M_info.equals("") ||M_Street.equals("") ||M_City.equals("") || M_zip.equals("")){
+	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
+	    		}
+	    		else {
+	    			int M_Id = Integer.parseInt(M_id);
 	    		try {
 	    			Login l = new Login();
 	    			Connection con = l.connect();
 	    			Statement smt = con.createStatement();
-	    			String sql = "insert into member values("+M_id +",'"+M_name+"','"+M_Email+"','"+String.valueOf(M_pass)+"','"+M_info+"','"+M_Street+"','"+M_City+"','"+M_zip+"')";
+	    			String sql = "insert into member values("+M_Id +",'"+M_name+"','"+M_Email+"','"+String.valueOf(M_pass)+"','"+M_info+"','"+M_Street+"','"+M_City+"','"+M_zip+"')";
 	    			smt.executeUpdate(sql);
 	    			F.dispose();
 	    			JOptionPane.showMessageDialog(null, "Registration Successfull!!");
@@ -82,6 +87,7 @@ public class Register {
 	    		catch(Exception e1) {
 	    			JOptionPane.showMessageDialog(null,"Memeber Id already exists!!");
 	    		}
+	    	}
 	    	}
 	    	
 	    });
