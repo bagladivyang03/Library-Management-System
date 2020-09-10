@@ -18,11 +18,11 @@ public class Librarian {
 			}
 		});
 		
-		JButton search_but= new JButton("Search User ");
+		JButton search_but= new JButton("Display users");
 		search_but.setBounds(150,20,120,25);
 		search_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				display_users(smt);
 			}
 		});
 		
@@ -74,6 +74,25 @@ public class Librarian {
 			}
 		});
 		
+		JButton books_history_but= new JButton("View History");
+		books_history_but.setBounds(200,100,120,25);
+		books_history_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				show_history(smt);
+			}
+		});
+		
+		JButton logout_but= new JButton("Logout");
+		logout_but.setBounds(300,100,120,25);
+		logout_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				f.dispose();
+				Login L = new Login();
+				L.select_user();
+				
+			}
+		});
+		
 		
 			
 		
@@ -85,6 +104,8 @@ public class Librarian {
 		f.add(dis_book_but);
 		f.add(add_author_but);
 		f.add(set_penalty_but);
+		f.add(books_history_but);
+		f.add(logout_but);
 		f.setSize(600,200);//400 width and 500 height  
 	    f.setLayout(null);//using no layout managers  
 	    f.setVisible(true);
@@ -429,6 +450,44 @@ public class Librarian {
 	    F1.setVisible(true);
 	    
 	}
+	public static void display_users(Statement smt) {
+		JFrame f5 = new JFrame("Members Information");
+		try {
+			String sql = "select m.m_id,m.m_name,m.m_email,bo.b_id,b.b_name,bo.borrow_date,bo.return_date \r\n" + 
+					"from member as m , books as b , borrows as bo\r\n" + 
+					"where m.m_id = bo.m_id \r\n" + 
+					"and b.b_id = bo.b_id;";
+			ResultSet rs = smt.executeQuery(sql);
+			JTable members_list = new JTable();
+			members_list.setModel(DbUtils.resultSetToTableModel(rs));
+			JScrollPane scrollPane = new JScrollPane(members_list);
+			f5.add(scrollPane);
+			f5.setSize(800,400);
+			f5.setVisible(true);
+			
+		}
+		catch(Exception ex) {
+			JOptionPane.showMessageDialog(null,ex);
+		}
+	}
+	
+	public static void show_history(Statement smt) {
+		JFrame f5 = new JFrame("Return History");
+		try {
+			String sql = "select * from history";
+			ResultSet rs = smt.executeQuery(sql);
+			JTable book_history = new JTable();
+			book_history.setModel(DbUtils.resultSetToTableModel(rs));
+			JScrollPane scrollPane = new JScrollPane(book_history);
+			f5.add(scrollPane);
+			f5.setSize(800,400);
+			f5.setVisible(true);
+		}
+		catch(Exception E) {
+			JOptionPane.showMessageDialog(null,E);
+		}
+	}
+	
 		
 	
 

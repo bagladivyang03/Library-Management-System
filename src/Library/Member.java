@@ -73,14 +73,25 @@ public class Member{
 		up_book_but.setBounds(200,60,150,25);
 		up_book_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Update successful!");
+				update_info(m_id,smt);
 			}
 		});
 		JButton dis_userinfo_but= new JButton("Display user info");
 		dis_userinfo_but.setBounds(375,60,150,25);
 		dis_userinfo_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"Update successful!");
+				display_info(smt);
+			}
+		});
+		
+		JButton logout_but= new JButton("Logout");
+		logout_but.setBounds(300,100,120,25);
+		logout_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				f.dispose();
+				Login L = new Login();
+				L.select_user();
+				
 			}
 		});
 		
@@ -94,6 +105,7 @@ public class Member{
 		f.add(delete_but);
 		f.add(up_book_but);
 		f.add(dis_userinfo_but);
+		f.add(logout_but);
 		f.setSize(600,200);//400 width and 500 height  
 	    f.setLayout(null);//using no layout managers  
 	    f.setVisible(true);
@@ -289,5 +301,105 @@ public class Member{
 			JOptionPane.showMessageDialog(null,E);
 		}
 	}
+	public void display_info(Statement smt) {
+		JFrame f5 = new JFrame("Member Information");
+		try {
+			String sql = "select m_id,m_name,m_email,contact_info ,street,city,zipcode from member";
+			ResultSet rs = smt.executeQuery(sql);
+			JTable mem_info = new JTable();
+			mem_info.setModel(DbUtils.resultSetToTableModel(rs));
+			JScrollPane scrollPane = new JScrollPane(mem_info);
+			f5.add(scrollPane);
+			f5.setSize(800,400);
+			f5.setVisible(true);
+		}
+		catch(Exception E) {
+			JOptionPane.showMessageDialog(null,E);
+		}
+	}
+	
+	public void update_info(String m_id,Statement smt) {
+		JFrame F = new JFrame("Update the information");
+		
+		JLabel J1,J2;
+		
+		J1 = new JLabel("Mail ID");
+		J1.setBounds(40,15,200,30);
+		
+		JTextField Mail_ID = new JTextField();
+		Mail_ID.setBounds(80,15, 200, 30);
+		
+		JButton mailbutton=new JButton("UpdateEmail");//creating instance of JButton for Login Button
+	    mailbutton.setBounds(60,50,100,30);
+	    
+	    mailbutton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		String mail_id = Mail_ID.getText();
+	    		if(mail_id.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Please enter Mail ID !!");
+	    		}
+	    		else {
+	    			try {
+		    			
+			    		int M_id = Integer.parseInt(m_id);
+			    		String sql = "update member set m_email = '"+mail_id+ "' where m_id = "+M_id;
+			    		smt.executeUpdate(sql);
+			    		JOptionPane.showMessageDialog(null,"Email ID updated Successfully!!");
+			    		F.dispose();
+		    		}
+		    		catch(Exception E) {
+		    			JOptionPane.showMessageDialog(null,E);
+		    		}
+	    		}
+	    		
+	    	}
+	    	
+	    });
+		
+		J2 = new JLabel("Contact Info");
+		J2.setBounds(40,85,200,30);
+		
+		JTextField contact_info = new JTextField();
+		contact_info.setBounds(80,85, 200, 30);
+		
+		JButton contactbutton=new JButton("Update Contact Info");//creating instance of JButton for Login Button
+	    contactbutton.setBounds(60,120,200,30);
+	    
+	    contactbutton.addActionListener(new ActionListener(){
+	    	String Contact_info = contact_info.getText();
+	    	public void actionPerformed(ActionEvent e) {
+	    		if(Contact_info.equals("")) {
+	    			JOptionPane.showMessageDialog(null, "Pls Enter contact Info");
+	    		}
+	    		else {
+	    		try {
+	    			
+		    		int M_id = Integer.parseInt(m_id);
+		    		String sql = "update member set contact_info = '"+Contact_info+ "' where m_id = "+M_id;
+		    		smt.executeUpdate(sql);
+		    		JOptionPane.showMessageDialog(null,"Contact Info Updated Sucesssfully !!");
+		    		F.dispose();	
+	    		}
+	    		catch(Exception E) {
+	    			JOptionPane.showMessageDialog(null,E);
+	    		}
+	    	}
+	    		
+	    	}
+	    	
+	    });
+		
+	    F.add(J1);
+	    F.add(Mail_ID);
+	    F.add(mailbutton);
+	    F.add(J2);
+	    F.add(contact_info);
+	    F.add(contactbutton);
+	    F.setSize(600,600);
+	    F.setLayout(null);
+	    F.setVisible(true);
+	
+		
+ 	}
 
 }
