@@ -106,7 +106,8 @@ public class Librarian {
 		f.add(set_penalty_but);
 		f.add(books_history_but);
 		f.add(logout_but);
-		f.setSize(600,200);//400 width and 500 height  
+		f.setSize(600,200);
+		f.setLocationRelativeTo(null);
 	    f.setLayout(null);//using no layout managers  
 	    f.setVisible(true);
 	}
@@ -193,7 +194,8 @@ public class Librarian {
 	    f2.add(addbooks_but);
 	    f2.add(B_genre);
 	    f2.add(B_aisle);
-	    f2.setSize(400,400);//400 width and 500 height  
+	    f2.setSize(400,400);
+	    f2.setLocationRelativeTo(null);
 	    f2.setLayout(null);
 	    f2.setVisible(true);
 	    
@@ -253,7 +255,8 @@ public class Librarian {
 	    f3.add(A_name);
 	    f3.add(A_email);
 	    f3.add(addauth_but);
-	    f3.setSize(400,400);//400 width and 500 height  
+	    f3.setSize(400,400);
+	    f3.setLocationRelativeTo(null);
 	    f3.setLayout(null);
 	    f3.setVisible(true);
 	}
@@ -310,7 +313,8 @@ public class Librarian {
 	    f4.add(P_name);
 	    f4.add(P_email);
 	    f4.add(addpubl_but);
-	    f4.setSize(400,400);//400 width and 500 height  
+	    f4.setSize(400,400);//400 width and 500 height 
+	    f4.setLocationRelativeTo(null);
 	    f4.setLayout(null);
 	    f4.setVisible(true);
 	}
@@ -325,6 +329,7 @@ public class Librarian {
 			JScrollPane scrollPane = new JScrollPane(book_list);
 			f5.add(scrollPane);
 			f5.setSize(800,400);
+			f5.setLocationRelativeTo(null);
 			f5.setVisible(true);
 			
 		}
@@ -363,7 +368,8 @@ public class Librarian {
 		f6.add(J1);
 		f6.add(B_ID);
 		f6.add(add_del_but);
-		f6.setSize(400,200);//400 width and 500 height  
+		f6.setSize(400,200);//400 width and 500 height 
+		f6.setLocationRelativeTo(null);
 	    f6.setLayout(null);
 	    f6.setVisible(true);	
 	}
@@ -408,7 +414,8 @@ public class Librarian {
 	    f7.add(B_ID);
 	    f7.add(new_aisle);
 	    f7.add(up_aisle_but);
-		f7.setSize(400,300);//400 width and 500 height  
+		f7.setSize(400,300);//400 width and 500 height 
+		f7.setLocationRelativeTo(null);
 	    f7.setLayout(null);
 	    f7.setVisible(true);
 	}
@@ -446,6 +453,7 @@ public class Librarian {
 	    F1.add(M_ID);
 	    F1.add(penalty_button);
 	    F1.setSize(400,300);
+	    F1.setLocationRelativeTo(null);
 	    F1.setLayout(null);
 	    F1.setVisible(true);
 	    
@@ -463,6 +471,7 @@ public class Librarian {
 			JScrollPane scrollPane = new JScrollPane(members_list);
 			f5.add(scrollPane);
 			f5.setSize(800,400);
+			f5.setLocationRelativeTo(null);
 			f5.setVisible(true);
 			
 		}
@@ -481,6 +490,7 @@ public class Librarian {
 			JScrollPane scrollPane = new JScrollPane(book_history);
 			f5.add(scrollPane);
 			f5.setSize(800,400);
+			f5.setLocationRelativeTo(null);
 			f5.setVisible(true);
 		}
 		catch(Exception E) {

@@ -106,7 +106,8 @@ public class Member{
 		f.add(up_book_but);
 		f.add(dis_userinfo_but);
 		f.add(logout_but);
-		f.setSize(600,200);//400 width and 500 height  
+		f.setSize(600,200);//400 width and 500 height 
+		f.setLocationRelativeTo(null);
 	    f.setLayout(null);//using no layout managers  
 	    f.setVisible(true);
 	}
@@ -139,6 +140,7 @@ public class Member{
 	    F1.add(B_name);
 	    F1.add(searchbutton);
 	    F1.setSize(400,200);
+	    F1.setLocationRelativeTo(null);
 	    F1.setLayout(null);
 	    F1.setVisible(true);
 	}
@@ -171,6 +173,7 @@ public class Member{
 	    F1.add(A_name);
 	    F1.add(searchbutton);
 	    F1.setSize(400,200);
+	    F1.setLocationRelativeTo(null);
 	    F1.setLayout(null);
 	    F1.setVisible(true);
 	}
@@ -204,6 +207,7 @@ public class Member{
 	    F1.add(P_name);
 	    F1.add(searchbutton);
 	    F1.setSize(400,200);
+	    F1.setLocationRelativeTo(null);
 	    F1.setLayout(null);
 	    F1.setVisible(true);
 	}
@@ -219,6 +223,7 @@ public class Member{
 			JScrollPane scrollPane = new JScrollPane(book_list);
 			J.add(scrollPane);
 			J.setSize(800,400);
+			J.setLocationRelativeTo(null);
 			J.setVisible(true);
 		}
 		catch(Exception e) {
@@ -263,6 +268,7 @@ public class Member{
 	    F1.add(issuebutton);
 	    F1.setSize(400,400);
 	    F1.setLayout(null);
+	    F1.setLocationRelativeTo(null);
 	    F1.setVisible(true);
 	}
 	
@@ -311,6 +317,7 @@ public class Member{
 			JScrollPane scrollPane = new JScrollPane(mem_info);
 			f5.add(scrollPane);
 			f5.setSize(800,400);
+			f5.setLocationRelativeTo(null);
 			f5.setVisible(true);
 		}
 		catch(Exception E) {
@@ -396,6 +403,7 @@ public class Member{
 	    F.add(contact_info);
 	    F.add(contactbutton);
 	    F.setSize(600,600);
+	    F.setLocationRelativeTo(null);
 	    F.setLayout(null);
 	    F.setVisible(true);
 	

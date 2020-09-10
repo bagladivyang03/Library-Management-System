@@ -3,14 +3,23 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 public class Login extends JFrame{
 	//private JLabel item1;
 	private JLabel item1;
 	public void select_user() {
-		item1=new JLabel("Welcome to Library!");
-		item1.setBounds(120, 0, 150,40);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel( new FlatDarkLaf() );
+		}
+		catch(Exception e) {
+			
+		}
+		
+	item1=new JLabel("Welcome to Library!");
+	item1.setBounds(120, 0, 150,40);
 	JFrame f=new JFrame("User Select");
 	//item1=new JLabel("Welcome to Library!");
 	//add(item1);
@@ -21,7 +30,8 @@ public class Login extends JFrame{
     f.add(item1);
     f.add(b1);  
     f.add(b2);
-    f.setSize(400,400);  
+    f.setSize(400,400);
+    f.setLocationRelativeTo(null);
     f.setLayout(null);  
     f.setVisible(true);
     b1.addActionListener(new ActionListener() {
@@ -34,7 +44,7 @@ public class Login extends JFrame{
     });
     b2.addActionListener(new ActionListener() {
     	public void actionPerformed(ActionEvent e) {
-    		member();
+    		Member();
     		f.dispose();
     	}
     
@@ -42,6 +52,7 @@ public class Login extends JFrame{
     });
 	}
 	public void librarian() {
+		
 		
 		JFrame f1=new JFrame("Librarian login");//creating instance of JFrame  
 	    JLabel l1,l2;  
@@ -109,9 +120,41 @@ public class Login extends JFrame{
 	    f1.add(F_user);
 	    f1.add(F_pass);
 	    f1.add(login_but);
-	    f1.setSize(400,180);//400 width and 500 height  
+	    f1.setSize(400,180);
+	    f1.setLocationRelativeTo(null);
 	    f1.setLayout(null);
 	    f1.setVisible(true);
+	}
+	public void Member() {
+		JFrame F = new JFrame("Register & Login");
+		
+		JButton reg_but=new JButton("Register");//creating instance of JButton for Login Button
+	    reg_but.setBounds(75,15,100,25);//Dimensions for button
+	    
+		JButton login_but=new JButton("Login");//creating instance of JButton for Login Button
+	    login_but.setBounds(75,50,100,25);//Dimensions for button
+	    
+	    reg_but.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		F.dispose();
+	    		
+	    		Register R = new Register();
+	    		R.register();
+	    	}
+	    	});
+	    
+	    login_but.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent e) {
+	    		F.dispose();
+	    		member();
+	    	}
+	    	});
+	    F.add(reg_but);
+	    F.add(login_but);
+	    F.setSize(400,400);
+	    F.setLocationRelativeTo(null);
+	    F.setLayout(null);
+	    F.setVisible(true);
 	}
 	public void member() {
 		JFrame f1=new JFrame("Member login");//creating instance of JFrame  
@@ -183,7 +226,8 @@ public class Login extends JFrame{
 	    f1.add(F_user);
 	    f1.add(F_pass);
 	    f1.add(login_but);
-	    f1.setSize(400,180);//400 width and 500 height  
+	    f1.setSize(400,180);
+	    f1.setLocationRelativeTo(null);
 	    f1.setLayout(null);
 	    f1.setVisible(true);
 	}
