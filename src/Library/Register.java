@@ -58,7 +58,7 @@ public class Register {
 		M_password.setBounds(130, 260, 200, 30);
 		
 		JButton registerbutton =new JButton("Register");//creating instance of JButton for Login Button
-	    registerbutton.setBounds(160,305,200,30);
+	    registerbutton.setBounds(130,305,200,30);
 		
 		registerbutton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -108,7 +108,7 @@ public class Register {
 		F.add(M_Zipcode);
 		F.add(M_password);
 		F.add(registerbutton);
-		F.setSize(500,500);
+		F.setSize(450,400);
 		F.setLocationRelativeTo(null);
 		F.setLayout(null);
 		F.setVisible(true);

@@ -1,14 +1,11 @@
 package Library;
 import javax.swing.*;
-
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.awt.Font;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-
-
 public class Login extends JFrame{
 	//private JLabel item1;
 	private JLabel item1;
@@ -22,18 +19,19 @@ public class Login extends JFrame{
 		}
 		
 	item1=new JLabel("Welcome to Library!");
-	item1.setBounds(120, 0, 150,40);
+	item1.setFont(new Font("Helvetica Neue",Font.PLAIN,18));
+	item1.setBounds(100, 0, 200,80);
 	JFrame f=new JFrame("User Select");
 	//item1=new JLabel("Welcome to Library!");
 	//add(item1);
     JButton b1=new JButton("Librarian");
     JButton b2=new JButton("Member");
-    b1.setBounds(50,100,95,30);
-    b2.setBounds(200,100,95,30);
+    b1.setBounds(60,100,95,30);
+    b2.setBounds(210,100,95,30);
     f.add(item1);
     f.add(b1);  
     f.add(b2);
-    f.setSize(400,400);
+    f.setSize(380,200);
     f.setLocationRelativeTo(null);
     f.setLayout(null);  
     f.setVisible(true);

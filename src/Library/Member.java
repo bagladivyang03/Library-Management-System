@@ -1,9 +1,6 @@
 package Library;
 import javax.swing.*;
-
-
 import net.proteanit.sql.DbUtils;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -13,7 +10,7 @@ public class Member{
 	public void Member_menu(String m_id,Statement smt) {
 		JFrame f =new JFrame("Member Functions");
 		JButton add_but = new JButton("Search Book");
-		add_but.setBounds(20,20,120,25);
+		add_but.setBounds(50,20,150,25);
 		add_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				book_search(smt);
@@ -21,7 +18,7 @@ public class Member{
 		});
 		
 		JButton search_but= new JButton("Issue Book");
-		search_but.setBounds(150,20,120,25);
+		search_but.setBounds(50,70,150,25);
 		search_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login L = new Login();
@@ -46,7 +43,7 @@ public class Member{
 		});
 		
 		JButton up_aut_but= new JButton("Return Book");
-		up_aut_but.setBounds(280,20,120,25);
+		up_aut_but.setBounds(50,120,150,25);
 		up_aut_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				return_book(m_id,smt);
@@ -54,7 +51,7 @@ public class Member{
 		});
 		
 		JButton up_pub_but= new JButton("Search Author");
-		up_pub_but.setBounds(410,20,140,25);
+		up_pub_but.setBounds(50,170,150,25);
 		up_pub_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				author_search(smt);
@@ -62,7 +59,7 @@ public class Member{
 		});
 		
 		JButton delete_but= new JButton("Search Publisher ");
-		delete_but.setBounds(25,60,150,25);
+		delete_but.setBounds(300,20,150,25);
 		delete_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				publisher_search(smt);
@@ -70,14 +67,14 @@ public class Member{
 		});
 		
 		JButton up_book_but= new JButton("Update User Info");
-		up_book_but.setBounds(200,60,150,25);
+		up_book_but.setBounds(300,70,150,25);
 		up_book_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				update_info(m_id,smt);
 			}
 		});
 		JButton dis_userinfo_but= new JButton("Display user info");
-		dis_userinfo_but.setBounds(375,60,150,25);
+		dis_userinfo_but.setBounds(300,120,150,25);
 		dis_userinfo_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				display_info(m_id,smt);
@@ -85,12 +82,21 @@ public class Member{
 		});
 		
 		JButton logout_but= new JButton("Logout");
-		logout_but.setBounds(300,100,120,25);
+		logout_but.setBounds(175,230,200,40);
 		logout_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				f.dispose();
 				Login L = new Login();
 				L.select_user();
+				
+			}
+		});
+		
+		JButton view_issued_book_but= new JButton("View Issued Book");
+		view_issued_book_but.setBounds(300,170,150,25);
+		view_issued_book_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view_book(m_id,smt);
 				
 			}
 		});
@@ -105,8 +111,9 @@ public class Member{
 		f.add(delete_but);
 		f.add(up_book_but);
 		f.add(dis_userinfo_but);
+		f.add(view_issued_book_but);
 		f.add(logout_but);
-		f.setSize(600,200);//400 width and 500 height 
+		f.setSize(500,350);//400 width and 500 height 
 		f.setLocationRelativeTo(null);
 	    f.setLayout(null);//using no layout managers  
 	    f.setVisible(true);
@@ -299,46 +306,59 @@ public class Member{
 	    F1.add(J1);
 	    F1.add(B_ID);
 	    F1.add(issuebutton);
-	    F1.setSize(400,400);
+	    F1.setSize(400,200);
 	    F1.setLayout(null);
 	    F1.setLocationRelativeTo(null);
 	    F1.setVisible(true);
 	}
 	
 	public static void return_book(String M_id , Statement smt) {
-		
+		int m_id = Integer.parseInt(M_id);
 		try {
-			Login L = new Login();
-			Connection con = L.connect1();
-			String sql = "{call calc_penalty(?)}";
-			CallableStatement stmt=con.prepareCall(sql);
-			stmt.setInt(1, Integer.parseInt(M_id));
-			stmt.execute();
-			String sql1 = "select penalty from borrows where m_id = "+M_id;
-			ResultSet rs=smt.executeQuery(sql1);
-			while(rs.next()) {
-				String Penalty = rs.getString(1);
-				int pen = Integer.parseInt(Penalty);
-				if(pen>0) {
-					JOptionPane.showMessageDialog(null, "Pay Penalty First!! Contact to Librarian :/");
-				}
-				else {
-					try {
-						Statement smt1 = con.createStatement();
-						String sql2 = "delete from borrows where m_id = "+M_id;
-						smt1.executeUpdate(sql2);
+			String sql3 = "select m_id from borrows where m_id ="+ m_id;
+			ResultSet rs1 = smt.executeQuery(sql3);
+			if(rs1.next()) {
+				try {
+					Login L = new Login();
+					Connection con = L.connect1();
+					String sql = "{call calc_penalty(?)}";
+					CallableStatement stmt=con.prepareCall(sql);
+					stmt.setInt(1, Integer.parseInt(M_id));
+					stmt.execute();
+					String sql1 = "select penalty from borrows where m_id = "+M_id;
+					ResultSet rs=smt.executeQuery(sql1);
+					while(rs.next()) {
+						String Penalty = rs.getString(1);
+						int pen = Integer.parseInt(Penalty);
+						if(pen>0) {
+							JOptionPane.showMessageDialog(null, "Pay Penalty First!! Contact to Librarian :/");
+						}
+						else {
+							try {
+								Statement smt1 = con.createStatement();
+								String sql2 = "delete from borrows where m_id = "+M_id;
+								smt1.executeUpdate(sql2);
+							}
+							catch(Exception E2) {
+								JOptionPane.showMessageDialog(null,E2);
+							}
+							
+							JOptionPane.showMessageDialog(null, "Return Successfull!!");
+						}
 					}
-					catch(Exception E2) {
-						JOptionPane.showMessageDialog(null,E2);
-					}
-					
-					JOptionPane.showMessageDialog(null, "Return Successfull!!");
 				}
+				catch(Exception E) {
+					JOptionPane.showMessageDialog(null,E);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null,"No book issued or no return left!!");
 			}
 		}
 		catch(Exception E) {
 			JOptionPane.showMessageDialog(null,E);
 		}
+
 	}
 	public void display_info(String M_id,Statement smt) {
 		JFrame f5 = new JFrame("Member Information");
@@ -350,7 +370,7 @@ public class Member{
 			mem_info.setModel(DbUtils.resultSetToTableModel(rs));
 			JScrollPane scrollPane = new JScrollPane(mem_info);
 			f5.add(scrollPane);
-			f5.setSize(800,400);
+			f5.setSize(800,100);
 			f5.setLocationRelativeTo(null);
 			f5.setVisible(true);
 		}
@@ -365,13 +385,13 @@ public class Member{
 		JLabel J1,J2;
 		
 		J1 = new JLabel("Mail ID");
-		J1.setBounds(40,15,200,30);
+		J1.setBounds(40,20,200,30);
 		
 		JTextField Mail_ID = new JTextField();
-		Mail_ID.setBounds(80,15, 200, 30);
+		Mail_ID.setBounds(120,20, 200, 30);
 		
 		JButton mailbutton=new JButton("UpdateEmail");//creating instance of JButton for Login Button
-	    mailbutton.setBounds(60,50,100,30);
+	    mailbutton.setBounds(120,70,200,30);
 	    
 	    mailbutton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -398,13 +418,13 @@ public class Member{
 	    });
 		
 		J2 = new JLabel("Contact Info");
-		J2.setBounds(40,85,200,30);
+		J2.setBounds(40,120,200,30);
 		
 		JTextField contact_info = new JTextField();
-		contact_info.setBounds(80,85, 200, 30);
+		contact_info.setBounds(120,120, 200, 30);
 		
 		JButton contactbutton=new JButton("Update Contact Info");//creating instance of JButton for Login Button
-	    contactbutton.setBounds(60,120,200,30);
+	    contactbutton.setBounds(120,170,200,30);
 	    
 	    contactbutton.addActionListener(new ActionListener(){
 	    	String Contact_info = contact_info.getText();
@@ -436,9 +456,36 @@ public class Member{
 	    F.add(J2);
 	    F.add(contact_info);
 	    F.add(contactbutton);
-	    F.setSize(600,600);
+	    F.setSize(400,300);
 	    F.setLocationRelativeTo(null);
 	    F.setLayout(null);
 	    F.setVisible(true);	
  	}
+	public void view_book(String m_id , Statement smt) {
+		try {
+			String sql = "select b_id from borrows where m_id="+m_id;
+			ResultSet rs = smt.executeQuery(sql);
+			if(rs.next()) {
+				int M_id = Integer.parseInt(m_id);
+				JFrame f5 = new JFrame("Issued Book Info");
+				String sql1 = "select Bo.b_id,b.b_name,Bo.borrow_date,Bo.return_date \r\n" + 
+						"from borrows Bo , books b\r\n" + 
+						"where Bo.b_id = b.b_id and Bo.m_id ="+M_id ;
+				ResultSet rs1 = smt.executeQuery(sql1);
+				JTable mem_info = new JTable();
+				mem_info.setModel(DbUtils.resultSetToTableModel(rs1));
+				JScrollPane scrollPane = new JScrollPane(mem_info);
+				f5.add(scrollPane);
+				f5.setSize(800,100);
+				f5.setLocationRelativeTo(null);
+				f5.setVisible(true);	
+			}
+			else {
+				JOptionPane.showMessageDialog(null,"You haven't issued any book yet.");
+			}
+		}
+		catch(Exception E) {
+			JOptionPane.showMessageDialog(null,E);
+		}
+	}
 }

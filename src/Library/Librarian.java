@@ -67,7 +67,7 @@ public class Librarian {
 		});
 		
 		JButton set_penalty_but= new JButton("Set Penalty");
-		set_penalty_but.setBounds(410,60,120,25);
+		set_penalty_but.setBounds(410,60,140,25);
 		set_penalty_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				get_mid(smt);
@@ -75,7 +75,7 @@ public class Librarian {
 		});
 		
 		JButton books_history_but= new JButton("View History");
-		books_history_but.setBounds(200,100,120,25);
+		books_history_but.setBounds(150,100,120,25);
 		books_history_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				show_history(smt);
@@ -83,7 +83,7 @@ public class Librarian {
 		});
 		
 		JButton logout_but= new JButton("Logout");
-		logout_but.setBounds(300,100,120,25);
+		logout_but.setBounds(280,100,120,25);
 		logout_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				f.dispose();
@@ -153,7 +153,7 @@ public class Librarian {
 		
 		
 	    JButton addbooks_but=new JButton("Add Books");//creating instance of JButton for Login Button
-	    addbooks_but.setBounds(170,225,100,25);
+	    addbooks_but.setBounds(170,240,100,25);
 	    
 	    addbooks_but.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e) {
@@ -199,7 +199,7 @@ public class Librarian {
 	    f2.add(addbooks_but);
 	    f2.add(B_genre);
 	    f2.add(B_aisle);
-	    f2.setSize(400,400);
+	    f2.setSize(400,350);
 	    f2.setLocationRelativeTo(null);
 	    f2.setLayout(null);
 	    f2.setVisible(true);
@@ -265,7 +265,7 @@ public class Librarian {
 	    f3.add(A_name);
 	    f3.add(A_email);
 	    f3.add(addauth_but);
-	    f3.setSize(400,400);
+	    f3.setSize(400,250);
 	    f3.setLocationRelativeTo(null);
 	    f3.setLayout(null);
 	    f3.setVisible(true);
@@ -329,7 +329,7 @@ public class Librarian {
 	    f4.add(P_name);
 	    f4.add(P_email);
 	    f4.add(addpubl_but);
-	    f4.setSize(400,400);//400 width and 500 height 
+	    f4.setSize(400,250);//400 width and 500 height 
 	    f4.setLocationRelativeTo(null);
 	    f4.setLayout(null);
 	    f4.setVisible(true);
@@ -364,7 +364,7 @@ public class Librarian {
 		B_ID.setBounds(150, 15, 200, 30);
 		
 		JButton add_del_but=new JButton("Delete Book");//creating instance of JButton for Login Button
-	    add_del_but.setBounds(170,50,150,25);
+	    add_del_but.setBounds(170,65,150,25);
 	    
 		add_del_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -389,7 +389,7 @@ public class Librarian {
 		f6.add(J1);
 		f6.add(B_ID);
 		f6.add(add_del_but);
-		f6.setSize(400,200);//400 width and 500 height 
+		f6.setSize(400,150);//400 width and 500 height 
 		f6.setLocationRelativeTo(null);
 	    f6.setLayout(null);
 	    f6.setVisible(true);	
@@ -402,16 +402,16 @@ public class Librarian {
 		J1.setBounds(30,15,100,30);
 		
 		J2 = new JLabel("New Aisle");
-		J2.setBounds(30,45,100,30);
+		J2.setBounds(30,65,100,30);
 
 		JTextField B_ID = new JTextField();
 		B_ID.setBounds(150, 15, 200, 30);
 		
 		JTextField new_aisle = new JTextField();
-		new_aisle.setBounds(150, 45, 200, 30);
+		new_aisle.setBounds(150, 65, 200, 30);
 		
 		JButton up_aisle_but=new JButton("Update Book");//creating instance of JButton for Login Button
-	    up_aisle_but.setBounds(170,80,200,30);
+	    up_aisle_but.setBounds(150,115,200,30);
 	    
 	    up_aisle_but.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
@@ -440,7 +440,7 @@ public class Librarian {
 	    f7.add(B_ID);
 	    f7.add(new_aisle);
 	    f7.add(up_aisle_but);
-		f7.setSize(400,300);//400 width and 500 height 
+		f7.setSize(400,250);//400 width and 500 height 
 		f7.setLocationRelativeTo(null);
 	    f7.setLayout(null);
 	    f7.setVisible(true);
@@ -483,7 +483,7 @@ public class Librarian {
 	    F1.add(J1);
 	    F1.add(M_ID);
 	    F1.add(penalty_button);
-	    F1.setSize(400,300);
+	    F1.setSize(400,200);
 	    F1.setLocationRelativeTo(null);
 	    F1.setLayout(null);
 	    F1.setVisible(true);
@@ -492,9 +492,9 @@ public class Librarian {
 	public static void display_users(Statement smt) {
 		JFrame f5 = new JFrame("Members Information");
 		try {
-			String sql = "select m.m_id,m.m_name,m.m_email,bo.b_id,b.b_name,bo.borrow_date,bo.return_date \r\n" + 
-					"from member as m , books as b , borrows as bo\r\n" + 
-					"where m.m_id = bo.m_id \r\n" + 
+			String sql = "select m.m_id,m.m_name,m.m_email,bo.b_id,b.b_name,bo.borrow_date,bo.return_date \r\n"+ 
+					"from member as m , books as b , borrows as bo\r\n" +
+					"where m.m_id = bo.m_id\r\n"+ 
 					"and b.b_id = bo.b_id;";
 			ResultSet rs = smt.executeQuery(sql);
 			JTable members_list = new JTable();
@@ -528,8 +528,4 @@ public class Librarian {
 			JOptionPane.showMessageDialog(null,E);
 		}
 	}
-	
-		
-	
-
 }
