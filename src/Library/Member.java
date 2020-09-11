@@ -25,7 +25,7 @@ public class Member{
 		search_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login L = new Login();
-				Connection connection = L.connect();
+				Connection connection = L.connect1();
 				try {
 				CallableStatement cstmt = connection.prepareCall("{? = call check_user_inBorrows(?)}");
 				cstmt.registerOutParameter(1,java.sql.Types.INTEGER);
@@ -267,17 +267,30 @@ public class Member{
 	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
 	    		}
 	    		else {
-	    		int B_id = Integer.parseInt(b_id);
-	    		int M_id = Integer.parseInt(m_id);
-	    		try {
-	    			String sql = "insert into borrows values("+B_id +","+M_id+",curdate() , DATE_ADD(curdate(),INTERVAL 14 DAY) , 0)";
-	    			smt.executeUpdate(sql);
-	    			F1.dispose();
-	    			JOptionPane.showMessageDialog(null, "Book Issued Sucessfully!!");
-	    		}
-	    		catch(Exception e1) {
-	    			JOptionPane.showMessageDialog(null,e1);
-	    		}
+	    			String sql = "select b_id from borrows where b_id = "+b_id;
+	    			try {
+	    				ResultSet rs = smt.executeQuery(sql);
+	    				if(rs.next()) {
+	    					JOptionPane.showMessageDialog(null, "Book issued Already!!");
+	    				}
+	    				else {
+	    					int B_id = Integer.parseInt(b_id);
+	    		    		int M_id = Integer.parseInt(m_id);
+	    		    		try {
+	    		    			String sql1 = "insert into borrows values("+B_id +","+M_id+",curdate() , DATE_ADD(curdate(),INTERVAL 14 DAY) , 0)";
+	    		    			smt.executeUpdate(sql1);
+	    		    			F1.dispose();
+	    		    			JOptionPane.showMessageDialog(null, "Book Issued Sucessfully!!");
+	    		    		}
+	    		    		catch(Exception e1) {
+	    		    			JOptionPane.showMessageDialog(null,e1);
+	    		    		}
+	    				}
+	    			}
+	    			catch(Exception e1) {
+	    				JOptionPane.showMessageDialog(null,e1);
+	    			}
+	    		
 	    	}
 	    	}
 	    	
@@ -296,7 +309,7 @@ public class Member{
 		
 		try {
 			Login L = new Login();
-			Connection con = L.connect();
+			Connection con = L.connect1();
 			String sql = "{call calc_penalty(?)}";
 			CallableStatement stmt=con.prepareCall(sql);
 			stmt.setInt(1, Integer.parseInt(M_id));
@@ -426,11 +439,6 @@ public class Member{
 	    F.setSize(600,600);
 	    F.setLocationRelativeTo(null);
 	    F.setLayout(null);
-	    F.setVisible(true);
-	
-		
+	    F.setVisible(true);	
  	}
-	
-
-
 }

@@ -1,10 +1,13 @@
 package Library;
 import javax.swing.*;
+
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+
 
 public class Login extends JFrame{
 	//private JLabel item1;
@@ -115,6 +118,7 @@ public class Login extends JFrame{
 
 	    	}
 	    });
+
 	    f1.add(l1);
 	    f1.add(l2);
 	    f1.add(F_user);
@@ -191,15 +195,7 @@ public class Login extends JFrame{
 	    				smt.executeUpdate("use library");
 	    				String st = ("SELECT * FROM member WHERE m_name = '"+username+"' AND m_password='"+String.valueOf(password)+"'");
 	    				ResultSet rs = smt.executeQuery(st);
-//    				while(rs.next()) {
-//	    					System.out.println(rs.getString(1)+"\n");
-//	    					System.out.println(rs.getString(2)+"\n");
-//	    				}
 	    				if(rs.next()==false) { //Move pointer below
-	    	                  //System.out.print("No user");  
-//	    					System.out.println(rs.getString(1)+"\n");
-//	    					System.out.println(rs.getString(2)+"\n");
-	    					
 	    	                  JOptionPane.showMessageDialog(null,"Wrong Username/Password!"); //Display Message
 	    	 
 	    	              }
@@ -247,7 +243,7 @@ public class Login extends JFrame{
 	{
 	try {
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library","lib_member", "member123");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?noAccessToProcedureBodies=true","lib_member", "member123");
 	        return con;
 	 } 
 	 catch (Exception ex) {
