@@ -18,7 +18,7 @@ public class Librarian {
 			}
 		});
 		
-		JButton search_but= new JButton("Display users");
+		JButton search_but= new JButton("Issued Info");
 		search_but.setBounds(150,20,120,25);
 		search_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,7 +75,7 @@ public class Librarian {
 		});
 		
 		JButton books_history_but= new JButton("View History");
-		books_history_but.setBounds(150,100,120,25);
+		books_history_but.setBounds(100,100,120,25);
 		books_history_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				show_history(smt);
@@ -83,13 +83,21 @@ public class Librarian {
 		});
 		
 		JButton logout_but= new JButton("Logout");
-		logout_but.setBounds(280,100,120,25);
+		logout_but.setBounds(230,100,120,25);
 		logout_but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				f.dispose();
 				Login L = new Login();
 				L.select_user();
 				
+			}
+		});
+		
+		JButton disp_but= new JButton("Display Users");
+		disp_but.setBounds(360,100,120,25);
+		disp_but.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				disp_user(smt);
 			}
 		});
 		
@@ -106,6 +114,7 @@ public class Librarian {
 		f.add(set_penalty_but);
 		f.add(books_history_but);
 		f.add(logout_but);
+		f.add(disp_but);
 		f.setSize(600,200);
 		f.setLocationRelativeTo(null);
 	    f.setLayout(null);//using no layout managers  
@@ -527,5 +536,23 @@ public class Librarian {
 		catch(Exception E) {
 			JOptionPane.showMessageDialog(null,E);
 		}
+	}
+	public static void disp_user(Statement smt) {
+		JFrame f5 = new JFrame("Display Users");
+		try {
+			String sql = "select m_id,m_name,m_email,contact_info,street,city,zipcode from member";
+			ResultSet rs = smt.executeQuery(sql);
+			JTable disp_members = new JTable();
+			disp_members.setModel(DbUtils.resultSetToTableModel(rs));
+			JScrollPane scrollPane = new JScrollPane(disp_members);
+			f5.add(scrollPane);
+			f5.setSize(800,400);
+			f5.setLocationRelativeTo(null);
+			f5.setVisible(true);
+		}
+		catch(Exception E) {
+			JOptionPane.showMessageDialog(null,E);
+		}
+		
 	}
 }

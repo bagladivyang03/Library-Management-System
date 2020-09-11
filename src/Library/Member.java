@@ -331,7 +331,7 @@ public class Member{
 						String Penalty = rs.getString(1);
 						int pen = Integer.parseInt(Penalty);
 						if(pen>0) {
-							JOptionPane.showMessageDialog(null, "Pay Penalty First!! Contact to Librarian :/");
+							JOptionPane.showMessageDialog(null, "Pay penalty :"+pen +"Rs.!! Contact to Librarian :/");
 						}
 						else {
 							try {
