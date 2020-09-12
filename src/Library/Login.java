@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.awt.Font;
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
+
 public class Login extends JFrame{
 	//private JLabel item1;
 	private JLabel item1;
@@ -32,6 +32,8 @@ public class Login extends JFrame{
     f.add(b1);  
     f.add(b2);
     f.setSize(380,200);
+//    f.setSize(1650,1080);
+    f.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     f.setLocationRelativeTo(null);
     f.setLayout(null);  
     f.setVisible(true);

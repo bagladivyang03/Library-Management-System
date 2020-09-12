@@ -70,28 +70,42 @@ public class Register {
 	    		String M_Street = M_street.getText();
 	    		String M_City = M_city.getText();
 	    		String M_zip = M_Zipcode.getText();
-	    		if(M_id.equals("") || M_name.equals("") || M_Email.equals("") || M_pass.equals("") || M_info.equals("") ||M_Street.equals("") ||M_City.equals("") || M_zip.equals("")){
+	    		if(M_name.equals("") || M_Email.equals("") || M_pass.equals("") || M_info.equals("") ||M_Street.equals("") ||M_City.equals("") || M_zip.equals("")){
 	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
 	    		}
 	    		else {
-	    			int M_Id = Integer.parseInt(M_id);
-	    		try {
-	    			Login l = new Login();
-	    			Connection con = l.connect();
-	    			Statement smt = con.createStatement();
-	    			String sql = "insert into member values("+M_Id +",'"+M_name+"','"+M_Email+"','"+String.valueOf(M_pass)+"','"+M_info+"','"+M_Street+"','"+M_City+"','"+M_zip+"')";
-	    			smt.executeUpdate(sql);
-	    			F.dispose();
-	    			JOptionPane.showMessageDialog(null, "Registration Successfull!!");
-	    		}
-	    		catch(Exception e1) {
-	    			JOptionPane.showMessageDialog(null,"Memeber Id already exists!!");
-	    		}
+	    			
+	    			
+	    			String sql1 = "select count(*) from member";
+	    			try {
+	    				Login l = new Login();
+		    			Connection con = l.connect1();
+	    				Statement smt = con.createStatement();
+	    				ResultSet rs = smt.executeQuery(sql1);
+	    				if(rs.next()) {
+	    					int count = Integer.parseInt(rs.getString(1));
+	    					int M_Id = count+1;
+	    					try {
+//	    		    			Login l = new Login();
+//	    		    			Connection con = l.connect1();
+	    		    			String sql = "insert into member values("+M_Id +",'"+M_name+"','"+M_Email+"','"+String.valueOf(M_pass)+"','"+M_info+"','"+M_Street+"','"+M_City+"','"+M_zip+"')";
+	    		    			smt.executeUpdate(sql);
+	    		    			F.dispose();
+	    		    			JOptionPane.showMessageDialog(null, "Registration Successfull!!");
+	    		    		}
+	    		    		catch(Exception e1) {
+	    		    			JOptionPane.showMessageDialog(null,e1);
+	    		    		}
+	    				}
+	    			}
+	    			catch(Exception E) {
+	    				JOptionPane.showMessageDialog(null,E);
+	    			}
 	    	}
 	    	}
 	    	
 	    });
-		F.add(J1);
+//		F.add(J1);
 		F.add(J2);
 		F.add(J3);
 		F.add(J4);
@@ -99,7 +113,7 @@ public class Register {
 		F.add(J6);
 		F.add(J7);
 		F.add(J8);
-		F.add(M_ID);
+//		F.add(M_ID);
 		F.add(M_Name);
 		F.add(M_email);
 		F.add(M_contact_info);

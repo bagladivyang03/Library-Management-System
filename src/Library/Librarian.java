@@ -121,7 +121,7 @@ public class Librarian {
 	    f.setVisible(true);
 	}
 	// method to accept input for books
-	public static void add_books(String l_id , Statement smt) {
+	public static void add_books(String l_id , Statement smt){
 		JFrame f2=new JFrame("Enter Book Info");
 		JLabel J1,J2,J3,J4,J5,J6;
 		J1 = new JLabel("Book ID");
@@ -177,19 +177,32 @@ public class Librarian {
 	    		}
 	    		else {
 	    		int B_id = Integer.parseInt(b_id);
-	    		int L_id = Integer.parseInt(l_id);
-	    		int A_id = Integer.parseInt(b_author);
-	    		int P_id = Integer.parseInt(b_publisher);
-	    		int B_aisle = Integer.parseInt(b_aisle);
+	    		String sql = "select b_id from books where b_id = "+B_id;
 	    		try {
-	    		String sql = "insert into books values("+B_id+",'" +b_name+"','"+b_genre+"',"+B_aisle+","+L_id+","+A_id+","+P_id+")";
-	    		smt.executeUpdate(sql);
+	    			ResultSet rs = smt.executeQuery(sql);
+	    			if(rs.next()) {
+	    				JOptionPane.showMessageDialog(null,"Book ID already exists !!");
+	    			}
+	    			else {
+	    	    		int L_id = Integer.parseInt(l_id);
+	    	    		int A_id = Integer.parseInt(b_author);
+	    	    		int P_id = Integer.parseInt(b_publisher);
+	    	    		int B_aisle = Integer.parseInt(b_aisle);
+	    	    		try {
+	    	    		String sql1 = "insert into books values("+B_id+",'" +b_name+"','"+b_genre+"',"+B_aisle+","+L_id+","+A_id+","+P_id+")";
+	    	    		smt.executeUpdate(sql1);
+	    	    		}
+	    	    		catch(Exception ex) {
+	    	    			ex.printStackTrace();
+	    	    		}
+	    	    		f2.dispose();
+	    	    		JOptionPane.showMessageDialog(null, "Books added Successfully!!");
+	    			}
 	    		}
-	    		catch(Exception ex) {
-	    			ex.printStackTrace();
+	    		catch(Exception E) {
+	    			JOptionPane.showMessageDialog(null,E);
 	    		}
-	    		f2.dispose();
-	    		JOptionPane.showMessageDialog(null, "Books added Successfully!!");
+
 	    	}
 	    	}
 	    });
