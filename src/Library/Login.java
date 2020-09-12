@@ -3,8 +3,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.awt.Font;
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.Image;
+
+import java.awt.*;
 
 public class Login extends JFrame{
 	//private JLabel item1;
@@ -19,24 +21,37 @@ public class Login extends JFrame{
 		}
 		
 	item1=new JLabel("Welcome to Library!");
-	item1.setFont(new Font("Helvetica Neue",Font.PLAIN,18));
-	item1.setBounds(100, 0, 200,80);
+	item1.setFont(new Font("Helvetica Neue",Font.BOLD,54));
+	item1.setBounds(500, 200, 600,80);
+	item1.setForeground(Color.white);
 	JFrame f=new JFrame("User Select");
-	//item1=new JLabel("Welcome to Library!");
-	//add(item1);
     JButton b1=new JButton("Librarian");
+    
+    b1.setFont(new Font("Arial", Font.PLAIN, 25));
+    b1.setForeground(Color.white);
     JButton b2=new JButton("Member");
-    b1.setBounds(60,100,95,30);
-    b2.setBounds(210,100,95,30);
+    b2.setFont(new Font("Arial", Font.PLAIN, 25));
+    b2.setForeground(Color.white);
     f.add(item1);
     f.add(b1);  
     f.add(b2);
+    b1.setBounds(450,400,200,50);
+    b2.setBounds(850,400,200,50);
     f.setSize(380,200);
-//    f.setSize(1650,1080);
-    f.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-    f.setLocationRelativeTo(null);
-    f.setLayout(null);  
-    f.setVisible(true);
+    f.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    //f.setSize(1650,1080);
+    f.setLocationRelativeTo(null); 
+    f.setLayout(null);
+   f.setVisible(true);
+   f.getContentPane().setBackground(Color.ORANGE);
+   
+//   f.setLayout(new BorderLayout());
+//   ImageIcon img = new ImageIcon("images/test2.png");
+//   f.setContentPane(new JLabel(img));
+//   f.setLayout(new FlowLayout());
+
+
+ 
     b1.addActionListener(new ActionListener() {
     	public void actionPerformed(ActionEvent e) {
     		librarian();
@@ -128,6 +143,8 @@ public class Login extends JFrame{
 	    f1.setLocationRelativeTo(null);
 	    f1.setLayout(null);
 	    f1.setVisible(true);
+//	    f1.getContentPane().setBackground(Color.DARKSLATEBLUE);
+	    
 	}
 	public void Member() {
 		JFrame F = new JFrame("Register & Login");
@@ -251,6 +268,9 @@ public class Login extends JFrame{
 	 }
 	return null;
 	}
+	
 }
+
+
 
 

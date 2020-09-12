@@ -290,7 +290,7 @@ public class Member{
 	    		    			JOptionPane.showMessageDialog(null, "Book Issued Sucessfully!!");
 	    		    		}
 	    		    		catch(Exception e1) {
-	    		    			JOptionPane.showMessageDialog(null,e1);
+	    		    			JOptionPane.showMessageDialog(null,"Book Doesn't Exists !!");
 	    		    		}
 	    				}
 	    			}

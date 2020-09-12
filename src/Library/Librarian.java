@@ -191,12 +191,13 @@ public class Librarian {
 	    	    		try {
 	    	    		String sql1 = "insert into books values("+B_id+",'" +b_name+"','"+b_genre+"',"+B_aisle+","+L_id+","+A_id+","+P_id+")";
 	    	    		smt.executeUpdate(sql1);
-	    	    		}
-	    	    		catch(Exception ex) {
-	    	    			ex.printStackTrace();
-	    	    		}
 	    	    		f2.dispose();
 	    	    		JOptionPane.showMessageDialog(null, "Books added Successfully!!");
+	    	    		}
+	    	    		catch(Exception ex) {
+	    	    			JOptionPane.showMessageDialog(null,"Author ID/Publisher ID Doesn't Exists :/");
+	    	    		}
+	    	    		
 	    			}
 	    		}
 	    		catch(Exception E) {
@@ -268,12 +269,13 @@ public class Librarian {
 	    		try {
 	    		String sql = "insert into author values("+a_id+",'" +a_name+"','"+a_email+"')";
 	    		smt.executeUpdate(sql);
-	    		}
-	    		catch(Exception ex) {
-	    			ex.printStackTrace();
-	    		}
 	    		f3.dispose();
 	    		JOptionPane.showMessageDialog(null, "Author Details added Successfully!!");
+	    		}
+	    		catch(Exception ex) {
+	    			JOptionPane.showMessageDialog(null,"Author ID doesn't exists :(");
+	    		}
+	    		
 	    	}
 	    	}
 	    });
@@ -332,12 +334,13 @@ public class Librarian {
 	    		try {
 	    		String sql = "insert into publisher values("+p_id+",'" +p_name+"','"+p_email+"')";
 	    		smt.executeUpdate(sql);
-	    		}
-	    		catch(Exception ex) {
-	    			ex.printStackTrace();
-	    		}
 	    		f4.dispose();
 	    		JOptionPane.showMessageDialog(null, "Publisher Details added Successfully!!");
+	    		}
+	    		catch(Exception ex) {
+	    			JOptionPane.showMessageDialog(null, "Publisher ID doesn't exists :(");
+	    		}
+	    		
 	    	}
 	    	}
 	    });
@@ -397,14 +400,27 @@ public class Librarian {
 				else {
 				int B_id = Integer.parseInt(b_id);
 				try {
-					String sql = "delete from books where b_id = "+B_id;
-					smt.executeUpdate(sql);
+					String sql1 = "select b_id from books where b_id = "+B_id;
+					ResultSet rs = smt.executeQuery(sql1);
+					if(rs.next()) {
+						try {
+							String sql = "delete from books where b_id = "+B_id;
+							smt.executeUpdate(sql);
+						}
+						catch(Exception ex) {
+							JOptionPane.showMessageDialog(null,ex);
+						}
+						f6.dispose();
+						JOptionPane.showMessageDialog(null,"Delete successful!");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Book Doesn't exists");
+					}
 				}
-				catch(Exception ex) {
-					JOptionPane.showMessageDialog(null,ex);
+				catch(Exception E) {
+					JOptionPane.showMessageDialog(null,E);
 				}
-				f6.dispose();
-				JOptionPane.showMessageDialog(null,"Delete successful!");
+				
 			}
 			}
 		});
@@ -443,16 +459,31 @@ public class Librarian {
 	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
 	    		}
 	    		else {
-	    		try {
-	    			String sql = "update books set aisle = "+Integer.parseInt(New_aisle) +" where b_id = "+Integer.parseInt(B_id);
-	    			smt.executeUpdate(sql);
+	    			int B_ID = Integer.parseInt(B_id);
+	    			try {
+	    			String sql1 = "select b_id from books where b_id ="+B_ID;
+	    			ResultSet rs = smt.executeQuery(sql1);
 	    			
-	    		}
-	    		catch(Exception ex) {
-	    			JOptionPane.showMessageDialog(null,ex);
-	    		}
-	    		f7.dispose();
-	    		JOptionPane.showMessageDialog(null,"Aisle Updated successfully!");
+	    			if(rs.next()) {
+	    				try {
+	    	    			String sql = "update books set aisle = "+Integer.parseInt(New_aisle) +" where b_id = "+B_ID;
+	    	    			smt.executeUpdate(sql);
+	    	    			
+	    	    		}
+	    	    		catch(Exception ex) {
+	    	    			JOptionPane.showMessageDialog(null,ex);
+	    	    		}
+	    	    		f7.dispose();
+	    	    		JOptionPane.showMessageDialog(null,"Aisle Updated successfully!");
+	    	    		
+	    			}
+	    			else {
+	    				JOptionPane.showMessageDialog(null,"Book Doesn't exists :(");
+	    			}
+	    			}
+	    			catch(Exception e1) {
+	    				JOptionPane.showMessageDialog(null,e1);
+	    			}
 	    		
 	    	}
 	    	}
@@ -489,17 +520,39 @@ public class Librarian {
 	    		}
 	    		else {
 	    		int M_id = Integer.parseInt(m_id);
-	    		try {
-	    			String sql = "update borrows set penalty = 0 , return_date = curdate() where m_id ="+M_id;
-	    			smt.executeUpdate(sql);
-	    			F1.dispose();
-	    			JOptionPane.showMessageDialog(null, "Penalty Reset Sucessfull!!");
+	    		
+	    				try {
+	    					String sql2 = "select penalty from borrows where m_id = "+M_id;
+	    					ResultSet rs1 = smt.executeQuery(sql2);
+	    					if(rs1.next()) {
+	    						if(Integer.parseInt(rs1.getString(1)) > 0)
+	    						{
+	    							try {
+	    				    			String sql = "update borrows set penalty = 0 , return_date = curdate() where m_id ="+M_id;
+	    				    			smt.executeUpdate(sql);
+	    				    			F1.dispose();
+	    				    			JOptionPane.showMessageDialog(null, "Penalty Reset Sucessfull!!");
+	    				    		}
+	    				    		catch(Exception e1) {
+	    				    			JOptionPane.showMessageDialog(null,e1);
+	    				    		}
+	    						}
+	    						else if(Integer.parseInt(rs1.getString(1)) == 0) {
+		    						JOptionPane.showMessageDialog(null, "No Penalty Exists :)");
+		    					}
+	    					}
+	    					else {
+	    						JOptionPane.showMessageDialog(null,"Member hasn't issued book !!");
+	    					}
+	    					
+	    				}
+	    				catch(Exception E) {
+	    					
+	    				}
 	    		}
-	    		catch(Exception e1) {
-	    			JOptionPane.showMessageDialog(null,e1);
-	    		}
+	    		
 	    	}
-	    }
+	    
 	    	
 	    });
 	    F1.add(J1);
