@@ -97,6 +97,7 @@ public class Register {
 	    		    			JOptionPane.showMessageDialog(null,e1);
 	    		    		}
 	    				}
+	    				con.close();
 	    			}
 	    			catch(Exception E) {
 	    				JOptionPane.showMessageDialog(null,E);

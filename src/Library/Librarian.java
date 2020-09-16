@@ -7,7 +7,7 @@ import net.proteanit.sql.DbUtils;
 
 
 public class Librarian {
-	public void librarian_menu(String l_id , Statement smt) {
+	public void librarian_menu(String l_id , Statement smt,Connection con1) {
 
 		JFrame f =new JFrame("Librarian Functions");
 		JButton add_but = new JButton("Add Books ");
@@ -89,7 +89,13 @@ public class Librarian {
 				f.dispose();
 				Login L = new Login();
 				L.select_user();
-				
+				try {
+				smt.close();
+				con1.close();
+				}
+				catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, e1);
+				}
 			}
 		});
 		
@@ -199,12 +205,15 @@ public class Librarian {
 	    	    		}
 	    	    		
 	    			}
+//	    			smt.close();
 	    		}
 	    		catch(Exception E) {
 	    			JOptionPane.showMessageDialog(null,E);
 	    		}
+	    		
 
 	    	}
+	    		
 	    	}
 	    });
 	    
@@ -271,9 +280,11 @@ public class Librarian {
 	    		smt.executeUpdate(sql);
 	    		f3.dispose();
 	    		JOptionPane.showMessageDialog(null, "Author Details added Successfully!!");
+//	    		smt.close();
 	    		}
+	    		
 	    		catch(Exception ex) {
-	    			JOptionPane.showMessageDialog(null,"Author ID doesn't exists :(");
+	    			JOptionPane.showMessageDialog(null,"Author ID already exists :(");
 	    		}
 	    		
 	    	}
@@ -336,6 +347,7 @@ public class Librarian {
 	    		smt.executeUpdate(sql);
 	    		f4.dispose();
 	    		JOptionPane.showMessageDialog(null, "Publisher Details added Successfully!!");
+//	    		smt.close();
 	    		}
 	    		catch(Exception ex) {
 	    			JOptionPane.showMessageDialog(null, "Publisher ID doesn't exists :(");
@@ -372,7 +384,8 @@ public class Librarian {
 			f5.setSize(800,400);
 			f5.setLocationRelativeTo(null);
 			f5.setVisible(true);
-			
+//			rs.close();
+//			smt.close();
 		}
 		catch(Exception ex) {
 			JOptionPane.showMessageDialog(null,ex);
@@ -416,6 +429,7 @@ public class Librarian {
 					else {
 						JOptionPane.showMessageDialog(null, "Book Doesn't exists");
 					}
+//					smt.close();
 				}
 				catch(Exception E) {
 					JOptionPane.showMessageDialog(null,E);
@@ -480,6 +494,7 @@ public class Librarian {
 	    			else {
 	    				JOptionPane.showMessageDialog(null,"Book Doesn't exists :(");
 	    			}
+//	    			smt.close();
 	    			}
 	    			catch(Exception e1) {
 	    				JOptionPane.showMessageDialog(null,e1);
@@ -544,7 +559,7 @@ public class Librarian {
 	    					else {
 	    						JOptionPane.showMessageDialog(null,"Member hasn't issued book !!");
 	    					}
-	    					
+//	    					smt.close();
 	    				}
 	    				catch(Exception E) {
 	    					
@@ -583,7 +598,9 @@ public class Librarian {
 		}
 		catch(Exception ex) {
 			JOptionPane.showMessageDialog(null,ex);
+
 		}
+		
 	}
 	
 	public static void show_history(Statement smt) {

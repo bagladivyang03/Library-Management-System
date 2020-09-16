@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import com.formdev.flatlaf.FlatDarkLaf;
-import java.awt.Image;
+//import java.awt.Image;
 
 import java.awt.*;
 
@@ -120,11 +120,12 @@ public class Login extends JFrame{
 	    					while(rs.next()) {
 	    						String l_id = rs.getString("lib_id");
 	    						Librarian L = new Librarian();
-		    					L.librarian_menu(l_id,smt);
+		    					L.librarian_menu(l_id,smt,connection);
 	    					}
 	    					f1.dispose();
 	    					
 	    				}
+	    				rs.close();
 	    			}
 	    			catch(Exception ex) {
 	    				ex.printStackTrace();
@@ -222,11 +223,12 @@ public class Login extends JFrame{
 	    						
 	    						String m_id = rs.getString("m_id");
 	    						Member M = new Member();
-		    					M.Member_menu(m_id,smt);
+		    					M.Member_menu(m_id,smt,connection);
 	    					}
 	    					f1.dispose();
-	    					
+//	    					connection.close();
 	    				}
+	    				rs.close();
 	    			}
 	    			catch(Exception ex) {
 	    				ex.printStackTrace();
@@ -270,7 +272,3 @@ public class Login extends JFrame{
 	}
 	
 }
-
-
-
-

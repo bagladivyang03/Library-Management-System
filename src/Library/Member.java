@@ -7,7 +7,7 @@ import java.sql.*;
 
 
 public class Member{
-	public void Member_menu(String m_id,Statement smt) {
+	public void Member_menu(String m_id,Statement smt,Connection con) {
 		JFrame f =new JFrame("Member Functions");
 		JButton add_but = new JButton("Search Book");
 		add_but.setBounds(50,20,150,25);
@@ -34,6 +34,7 @@ public class Member{
 				else {
 					JOptionPane.showMessageDialog(null,"Return the book first!!");
 				}
+				connection.close();
 				
 				}
 				catch(Exception E) {
@@ -88,6 +89,13 @@ public class Member{
 				f.dispose();
 				Login L = new Login();
 				L.select_user();
+				try {
+					smt.close();
+					con.close();
+				}
+				catch(Exception e1) {
+						JOptionPane.showMessageDialog(null, e1);
+				}
 				
 			}
 		});
@@ -346,6 +354,7 @@ public class Member{
 							JOptionPane.showMessageDialog(null, "Return Successfull!!");
 						}
 					}
+					con.close();
 				}
 				catch(Exception E) {
 					JOptionPane.showMessageDialog(null,E);
