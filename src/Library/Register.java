@@ -94,7 +94,7 @@ public class Register {
 	    		    			JOptionPane.showMessageDialog(null, "Registration Successfull!!");
 	    		    		}
 	    		    		catch(Exception e1) {
-	    		    			JOptionPane.showMessageDialog(null,e1);
+	    		    			JOptionPane.showMessageDialog(null,"Member with these credentials already exists !!");
 	    		    		}
 	    				}
 	    				con.close();

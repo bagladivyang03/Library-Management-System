@@ -208,7 +208,7 @@ public class Librarian {
 //	    			smt.close();
 	    		}
 	    		catch(Exception E) {
-	    			JOptionPane.showMessageDialog(null,E);
+	    			JOptionPane.showMessageDialog(null,"The field(s) contains wrong information type");
 	    		}
 	    		
 
@@ -274,6 +274,7 @@ public class Librarian {
 	    			JOptionPane.showMessageDialog(null, "Please enter the missing fields");
 	    		}
 	    		else {
+	    			try {
 	    		int a_id = Integer.parseInt(A_id);
 	    		try {
 	    		String sql = "insert into author values("+a_id+",'" +a_name+"','"+a_email+"')";
@@ -282,12 +283,15 @@ public class Librarian {
 	    		JOptionPane.showMessageDialog(null, "Author Details added Successfully!!");
 //	    		smt.close();
 	    		}
-	    		
 	    		catch(Exception ex) {
 	    			JOptionPane.showMessageDialog(null,"Author ID already exists :(");
 	    		}
-	    		
+	    			}
+	    			catch(Exception e2) {
+	    				JOptionPane.showMessageDialog(null, "Author ID must be Integer.");
+	    			}
 	    	}
+	    	
 	    	}
 	    });
 	    
@@ -341,6 +345,7 @@ public class Librarian {
 	    		}
 	    		
 	    		else {
+	    			try {
 	    			int p_id = Integer.parseInt(P_id);
 	    		try {
 	    		String sql = "insert into publisher values("+p_id+",'" +p_name+"','"+p_email+"')";
@@ -352,6 +357,10 @@ public class Librarian {
 	    		catch(Exception ex) {
 	    			JOptionPane.showMessageDialog(null, "Publisher ID doesn't exists :(");
 	    		}
+	    			}
+	    			catch(Exception e1) {
+	    				JOptionPane.showMessageDialog(null, "Publisher ID must be Integer.");
+	    			}
 	    		
 	    	}
 	    	}
@@ -482,13 +491,14 @@ public class Librarian {
 	    				try {
 	    	    			String sql = "update books set aisle = "+Integer.parseInt(New_aisle) +" where b_id = "+B_ID;
 	    	    			smt.executeUpdate(sql);
+	    	    			f7.dispose();
+		    	    		JOptionPane.showMessageDialog(null,"Aisle Updated successfully!");
 	    	    			
 	    	    		}
 	    	    		catch(Exception ex) {
-	    	    			JOptionPane.showMessageDialog(null,ex);
+	    	    			JOptionPane.showMessageDialog(null,"Aisle must be Integer.");
 	    	    		}
-	    	    		f7.dispose();
-	    	    		JOptionPane.showMessageDialog(null,"Aisle Updated successfully!");
+	    	    		
 	    	    		
 	    			}
 	    			else {

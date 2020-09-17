@@ -4,7 +4,7 @@ import net.proteanit.sql.DbUtils;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-
+import java.util.*;
 
 public class Member{
 	public void Member_menu(String m_id,Statement smt,Connection con) {
@@ -436,8 +436,10 @@ public class Member{
 	    contactbutton.setBounds(120,170,200,30);
 	    
 	    contactbutton.addActionListener(new ActionListener(){
-	    	String Contact_info = contact_info.getText();
+	    	
+	    	
 	    	public void actionPerformed(ActionEvent e) {
+	    		String Contact_info= contact_info.getText();
 	    		if(Contact_info.equals("")) {
 	    			JOptionPane.showMessageDialog(null, "Pls Enter contact Info");
 	    		}
