@@ -7,8 +7,6 @@ of books. The system also shows the borrow details like lend date, return date, 
 provides the facility to search for books based on authors and publishers as well. The system also provides the
 facility to monitor the members of the library.
 
-![](images/lms.png)
-
 
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
@@ -23,6 +21,11 @@ facility to monitor the members of the library.
 - MySQL
 - JavaSwing
 
+## 💥 Contributors
+
+- [Divyang Bagla](https://github.com/bagladivyang03)
+- [Amey Bhide](https://github.com/Ameybhide24)
+- [Kartik Bhutada](https://github.com/kartikbx)
 
 
 ## Drop a ⭐ on the Github Repository.
