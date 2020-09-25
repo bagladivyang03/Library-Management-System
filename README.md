@@ -7,7 +7,7 @@ of books. The system also shows the borrow details like lend date, return date, 
 provides the facility to search for books based on authors and publishers as well. The system also provides the
 facility to monitor the members of the library.
 
-
+![](images/lms.png)
 
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
 ![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)
