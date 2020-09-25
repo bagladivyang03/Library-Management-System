@@ -9,7 +9,7 @@ facility to monitor the members of the library.
 
 
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)]
+![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
 ![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)
 ![forthebadge](https://forthebadge.com/images/badges/open-source.svg)
 ![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)
@@ -17,9 +17,9 @@ facility to monitor the members of the library.
 
 ## 🏁 Technology Stack
 
-- [Java]
-- [MySQL]
-- [JavaSwing] 
+- Java
+- MySQL
+- JavaSwing
 
 
 
