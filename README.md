@@ -13,6 +13,7 @@ facility to monitor the members of the library.
 ![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)
 ![forthebadge](https://forthebadge.com/images/badges/open-source.svg)
 ![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)
+![forthebadge](https://forthebadge.com/images/badges/check-it-out.svg)
 
 
 ## 🏁 Technology Stack
