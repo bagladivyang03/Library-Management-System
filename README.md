@@ -27,6 +27,7 @@ facility to monitor the members of the library.
 - [Divyang Bagla](https://github.com/bagladivyang03)
 - [Amey Bhide](https://github.com/Ameybhide24)
 - [Kartik Bhutada](https://github.com/kartikbx)
+- [Rajat Belgundi](https://github.com/Rajat2312)
 
 
 ## Drop a ⭐ on the Github Repository.
